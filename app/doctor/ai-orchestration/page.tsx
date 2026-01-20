@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Brain, FileText, Loader2, Send, User, Database, TrendingUp, Shield, Target, ArrowRight, CheckCircle, Clock, Edit, Save, History, Search } from "lucide-react"
+import { Brain, FileText, Spinner, PaperPlaneTilt, User, Database, TrendUp, ShieldCheck, Target, ArrowRight, CheckCircle, Clock, Pencil, FloppyDisk, ClockClockwise, MagnifyingGlass } from "phosphor-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -72,15 +72,15 @@ export default function AIOrchestrationPage() {
             name: "PatternSeeker",
             type: "case-history" as const,
             description: "Analyzes case history patterns and similarities",
-            icon: TrendingUp,
-            color: "#151616"
+            icon: TrendUp,
+            color: "#37322F"
         },
         {
             name: "RiskAnalyzer",
             type: "risk-assessment" as const,
             description: "Calculates risk factors based on patient demographics",
-            icon: Shield,
-            color: "#D6F32F"
+            icon: ShieldCheck,
+            color: "oklch(0.6_0.2_45)"
         },
         {
             name: "Coordinator",
@@ -916,7 +916,7 @@ export default function AIOrchestrationPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FFFFF4] p-6">
+        <div className="min-h-screen bg-white p-6">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <motion.div
@@ -925,10 +925,10 @@ export default function AIOrchestrationPage() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-8"
                 >
-                    <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-4">
+                    <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-4">
                         AI Agent Orchestration System
                     </h1>
-                    <p className="text-lg font-poppins text-[#151616]/70 max-w-3xl mx-auto">
+                    <p className="text-lg font-sans text-[rgba(55,50,47,0.80)] max-w-3xl mx-auto">
                         Advanced multi-agent system for comprehensive medical diagnosis
                     </p>
                 </motion.div>
@@ -941,23 +941,23 @@ export default function AIOrchestrationPage() {
                         transition={{ duration: 0.6 }}
                         className="max-w-2xl mx-auto"
                     >
-                        <Card className="border-2 border-[#151616] shadow-[8px_8px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-lg">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <CardTitle className="font-poppins font-bold text-[#151616] flex items-center gap-2">
+                                        <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
                                             <User className="w-5 h-5" />
                                             Patient Information
                                         </CardTitle>
-                                        <CardDescription className="font-poppins">
+                                        <CardDescription className="font-sans">
                                             {isEditing ? "Edit patient details" : "Pre-filled demo data ready for testing"}
                                         </CardDescription>
                                     </div>
                                     <Button
                                         onClick={() => setIsEditing(!isEditing)}
-                                        className="border-2 border-[#151616] hover:bg-[#D6F32F] font-poppins bg-white"
+                                        className="border border-[rgba(55,50,47,0.12)] hover:bg-[oklch(0.6_0.2_45)] hover:text-white font-sans bg-white"
                                     >
-                                        {isEditing ? <Save className="w-4 h-4 mr-2" /> : <Edit className="w-4 h-4 mr-2" />}
+                                        {isEditing ? <FloppyDisk size={16} weight="regular" className="mr-2" /> : <Pencil size={16} weight="regular" className="mr-2" />}
                                         {isEditing ? "Save" : "Edit"}
                                     </Button>
                                 </div>
@@ -971,23 +971,23 @@ export default function AIOrchestrationPage() {
                                             placeholder="John Doe"
                                             value={patientInfo.name}
                                             onChange={(e) => setPatientInfo({...patientInfo, name: e.target.value})}
-                                            className={`border-2 border-[#151616] font-poppins ${!isEditing ? 'bg-gray-50' : ''}`}
+                                            className={`border border-[rgba(55,50,47,0.12)] font-sans ${!isEditing ? 'bg-gray-50' : ''}`}
                                             disabled={!isEditing}
                                         />
                                         <div className="mt-2">
                                             <Button
                                                 onClick={() => fetchPatientHistory(patientInfo.name)}
                                                 disabled={!patientInfo.name.trim() || isLoadingHistory}
-                                                className="w-full bg-blue-500 hover:bg-blue-600 text-white border-2 border-[#151616] font-poppins text-sm"
+                                                className="w-full bg-blue-500 hover:bg-blue-600 text-white border border-blue-600 font-sans text-sm"
                                             >
                                                 {isLoadingHistory ? (
                                                     <>
-                                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                                        <Spinner size={16} weight="regular" className="mr-2 animate-spin" />
                                                         Searching History...
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Search className="w-4 h-4 mr-2" />
+                                                        <MagnifyingGlass size={16} weight="regular" className="mr-2" />
                                                         Fetch Patient History
                                                     </>
                                                 )}
@@ -1001,7 +1001,7 @@ export default function AIOrchestrationPage() {
                                             placeholder="25"
                                             value={patientInfo.age}
                                             onChange={(e) => setPatientInfo({...patientInfo, age: e.target.value})}
-                                            className={`border-2 border-[#151616] font-poppins ${!isEditing ? 'bg-gray-50' : ''}`}
+                                            className={`border border-[rgba(55,50,47,0.12)] font-sans ${!isEditing ? 'bg-gray-50' : ''}`}
                                             disabled={!isEditing}
                                         />
                                     </div>
@@ -1014,7 +1014,7 @@ export default function AIOrchestrationPage() {
                                         onValueChange={(value) => setPatientInfo({...patientInfo, gender: value})}
                                         disabled={!isEditing}
                                     >
-                                        <SelectTrigger className={`border-2 border-[#151616] font-poppins ${!isEditing ? 'bg-gray-50' : ''}`}>
+                                        <SelectTrigger className={`border border-[rgba(55,50,47,0.12)] font-sans ${!isEditing ? 'bg-gray-50' : ''}`}>
                                             <SelectValue placeholder="Select gender" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -1033,7 +1033,7 @@ export default function AIOrchestrationPage() {
                                         value={patientInfo.medicalHistory}
                                         onChange={(e) => setPatientInfo({...patientInfo, medicalHistory: e.target.value})}
                                         rows={3}
-                                        className={`border-2 border-[#151616] font-poppins resize-none ${!isEditing ? 'bg-gray-50' : ''}`}
+                                        className={`border border-[rgba(55,50,47,0.12)] font-sans resize-none ${!isEditing ? 'bg-gray-50' : ''}`}
                                         disabled={!isEditing}
                                     />
                                 </div>
@@ -1046,7 +1046,7 @@ export default function AIOrchestrationPage() {
                                         value={patientInfo.symptoms}
                                         onChange={(e) => setPatientInfo({...patientInfo, symptoms: e.target.value})}
                                         rows={4}
-                                        className={`border-2 border-[#151616] font-poppins resize-none ${!isEditing ? 'bg-gray-50' : ''}`}
+                                        className={`border border-[rgba(55,50,47,0.12)] font-sans resize-none ${!isEditing ? 'bg-gray-50' : ''}`}
                                         disabled={!isEditing}
                                         required
                                     />
@@ -1057,20 +1057,20 @@ export default function AIOrchestrationPage() {
                                     <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
                                         <div className="flex items-center justify-between mb-3">
                                             <div className="flex items-center gap-2">
-                                                <History className="w-5 h-5 text-blue-600" />
-                                                <span className="font-poppins font-semibold text-[#151616]">Patient History Found</span>
+                                                <ClockClockwise size={20} weight="regular" className="text-blue-600" />
+                                                <span className="font-sans font-semibold text-[#37322F]">Patient History Found</span>
                                             </div>
                                             <Button
                                                 onClick={() => setShowHistory(!showHistory)}
-                                                className="bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 font-poppins text-xs h-8"
+                                                className="bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 font-sans text-xs h-8"
                                             >
                                                 {showHistory ? "Hide" : "Show"} History
                                             </Button>
                                         </div>
-                                        <div className="text-sm font-poppins text-[#151616]/70 mb-2">
+                                        <div className="text-sm font-sans text-[rgba(55,50,47,0.80)] mb-2">
                                             <strong>{patientHistory.summary.totalVisits}</strong> previous visits • Last visit: <strong>{new Date(patientHistory.summary.lastVisit).toLocaleDateString()}</strong>
                                         </div>
-                                        <div className="text-sm font-poppins text-[#151616]/70">
+                                        <div className="text-sm font-sans text-[rgba(55,50,47,0.80)]">
                                             Recent diagnoses: <strong>{patientHistory.summary.recentTrends.slice(0, 2).join(', ')}</strong>
                                         </div>
                                         
@@ -1085,14 +1085,14 @@ export default function AIOrchestrationPage() {
                                                 {patientHistory.history.slice(0, 3).map((visit: any, idx: number) => (
                                                     <div key={visit.id} className="bg-white rounded p-3 border border-blue-200">
                                                         <div className="flex justify-between items-start mb-1">
-                                                            <span className="font-poppins font-medium text-[#151616] text-sm">
+                                                            <span className="font-sans font-medium text-[#37322F] text-sm">
                                                                 {visit.diagnosis}
                                                             </span>
-                                                            <span className="text-xs text-blue-600 font-poppins">
+                                                            <span className="text-xs text-blue-600 font-sans">
                                                                 {new Date(visit.date).toLocaleDateString()}
                                                             </span>
                                                         </div>
-                                                        <p className="text-xs font-poppins text-[#151616]/70">
+                                                        <p className="text-xs font-sans text-[rgba(55,50,47,0.80)]">
                                                             Confidence: {visit.confidence}% • Urgency: {visit.urgencyLevel}
                                                         </p>
                                                     </div>
@@ -1102,55 +1102,13 @@ export default function AIOrchestrationPage() {
                                     </div>
                                 )}
 
-                                {/* Demo Data Indicator */}
-                                {!isEditing && (
-                                    <div className="bg-[#D6F32F]/20 border-2 border-[#D6F32F] rounded-lg p-4">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <CheckCircle className="w-5 h-5 text-green-600" />
-                                            <span className="font-poppins font-semibold text-[#151616]">Demo Data Loaded</span>
-                                        </div>
-                                        <p className="text-sm font-poppins text-[#151616]/70">
-                                            Realistic patient data is pre-filled for easy testing. Click "Edit" to modify or use as-is.
-                                        </p>
-                                        <div className="mt-3 flex gap-2">
-                                            <Button
-                                                onClick={() => {
-                                                    setPatientInfo({
-                                                        name: "Sarah Johnson",
-                                                        age: "28",
-                                                        gender: "female",
-                                                        medicalHistory: "History of migraines, currently taking birth control pills. No other significant medical history.",
-                                                        symptoms: "Patient reports severe abdominal pain in the lower right quadrant for the past 6 hours, accompanied by nausea, vomiting, and low-grade fever. Pain initially started around the umbilicus and then localized to the right iliac fossa."
-                                                    })
-                                                }}
-                                                className="border-[#151616] hover:bg-[#D6F32F] font-poppins text-xs bg-white h-8"
-                                            >
-                                                Load Case 2
-                                            </Button>
-                                            <Button
-                                                onClick={() => {
-                                                    setPatientInfo({
-                                                        name: "Robert Chen",
-                                                        age: "45",
-                                                        gender: "male",
-                                                        medicalHistory: "Type 2 diabetes mellitus, hypertension, family history of cardiovascular disease.",
-                                                        symptoms: "Patient presents with chest pain that started 2 hours ago, described as crushing and radiating to the left arm. Associated with shortness of breath, sweating, and nausea. Pain scale 8/10."
-                                                    })
-                                                }}
-                                                className="border-[#151616] hover:bg-[#D6F32F] font-poppins text-xs bg-white h-8"
-                                            >
-                                                Load Case 3
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )}
 
                                 <Button
                                     onClick={handlePatientInfoSubmit}
                                     disabled={!patientInfo.name || !patientInfo.symptoms}
-                                    className="w-full bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616] transition-all duration-200 font-poppins font-bold"
+                                    className="w-full bg-[oklch(0.6_0.2_45)] text-white hover:bg-[oklch(0.6_0.2_45)]/90 transition-all duration-200 font-sans font-semibold"
                                 >
-                                    <Send className="w-4 h-4 mr-2" />
+                                    <PaperPlaneTilt size={16} weight="regular" className="mr-2" />
                                     Start AI Diagnosis
                                 </Button>
                             </CardContent>
@@ -1167,7 +1125,7 @@ export default function AIOrchestrationPage() {
                         className="space-y-8"
                     >
                         {/* Agent Flow Visualization */}
-                        <Card className="border-2 border-[#151616] shadow-[8px_8px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-lg">
                             <CardHeader>
                                 <CardTitle className="font-poppins font-bold text-[#151616] flex items-center gap-2">
                                     <Brain className="w-5 h-5" />
@@ -1205,7 +1163,7 @@ export default function AIOrchestrationPage() {
                                                     {isCompleted ? (
                                                         <CheckCircle className="w-6 h-6 text-white" />
                                                     ) : isProcessing ? (
-                                                        <Loader2 className="w-6 h-6 text-[#151616] animate-spin" />
+                                                        <Spinner size={24} weight="regular" className="text-[#37322F] animate-spin" />
                                                     ) : (
                                                         <Icon className="w-6 h-6 text-[#151616]" />
                                                     )}
@@ -1274,7 +1232,7 @@ export default function AIOrchestrationPage() {
                         className="space-y-8"
                     >
                         {/* Summary Card */}
-                        <Card className="border-2 border-[#151616] shadow-[8px_8px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-lg">
                             <CardHeader>
                                 <CardTitle className="font-poppins font-bold text-[#151616] flex items-center gap-2">
                                     <CheckCircle className="w-5 h-5 text-green-500" />

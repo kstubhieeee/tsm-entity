@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Stethoscope, Clock, DollarSign, User, FileText, Calendar } from "lucide-react"
+import { Heartbeat, Clock, CurrencyInr, User, FileText, Calendar } from "phosphor-react"
 
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 const TIME_SLOTS = [
@@ -54,8 +54,8 @@ export default function ClinicianProfileSetup() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FFFFF4]">
-        <div className="w-8 h-8 border-4 border-[#151616]/30 border-t-[#151616] rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-8 h-8 border-4 border-[rgba(55,50,47,0.30)] border-t-[#37322F] rounded-full animate-spin"></div>
       </div>
     )
   }
@@ -131,17 +131,17 @@ export default function ClinicianProfileSetup() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFF4] p-6">
+    <div className="min-h-screen bg-white p-6">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-2">
+          <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-2">
             Complete Your Profile
           </h1>
-          <p className="text-[#151616]/70 font-poppins">
+          <p className="text-[rgba(55,50,47,0.80)] font-sans">
             Set up your professional details to start accepting appointments
           </p>
         </motion.div>
@@ -153,20 +153,20 @@ export default function ClinicianProfileSetup() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+              <Card className="border border-[rgba(55,50,47,0.12)] shadow-lg">
                 <CardHeader>
-                  <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
-                    <User className="w-6 h-6 text-blue-600" />
+                  <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
+                    <User size={24} weight="regular" className="text-blue-600" />
                     Professional Details
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="specialization" className="text-[#151616] font-medium">
+                    <Label htmlFor="specialization" className="text-[#37322F] font-medium">
                       Specialization
                     </Label>
                     <Select onValueChange={(value) => setFormData(prev => ({ ...prev, specialization: value }))}>
-                      <SelectTrigger className="mt-2 border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]">
+                      <SelectTrigger className="mt-2 border border-[rgba(55,50,47,0.12)]">
                         <SelectValue placeholder="Select your specialization" />
                       </SelectTrigger>
                       <SelectContent>
@@ -191,7 +191,7 @@ export default function ClinicianProfileSetup() {
                       placeholder="e.g., 5"
                       value={formData.yearsOfExperience}
                       onChange={(e) => setFormData(prev => ({ ...prev, yearsOfExperience: e.target.value }))}
-                      className="mt-2 border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]"
+                      className="mt-2 border border-[rgba(55,50,47,0.12)]"
                       required
                     />
                   </div>
@@ -208,7 +208,7 @@ export default function ClinicianProfileSetup() {
                       placeholder="e.g., 2500"
                       value={formData.consultationFee}
                       onChange={(e) => setFormData(prev => ({ ...prev, consultationFee: e.target.value }))}
-                      className="mt-2 border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]"
+                      className="mt-2 border border-[rgba(55,50,47,0.12)]"
                       required
                     />
                   </div>
@@ -222,7 +222,7 @@ export default function ClinicianProfileSetup() {
                       placeholder="Brief description about your expertise and approach..."
                       value={formData.description}
                       onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                      className="mt-2 border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] min-h-24"
+                      className="mt-2 border border-[rgba(55,50,47,0.12)] min-h-24"
                       maxLength={500}
                       required
                     />
@@ -236,10 +236,10 @@ export default function ClinicianProfileSetup() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+              <Card className="border border-[rgba(55,50,47,0.12)] shadow-lg">
                 <CardHeader>
-                  <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
-                    <Calendar className="w-6 h-6 text-green-600" />
+                  <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
+                    <Calendar size={24} weight="regular" className="text-green-600" />
                     Availability Schedule
                   </CardTitle>
                 </CardHeader>
@@ -252,7 +252,7 @@ export default function ClinicianProfileSetup() {
                           checked={!!formData.availability[day]}
                           onCheckedChange={() => handleDayToggle(day)}
                         />
-                        <Label htmlFor={day} className="text-[#151616] font-medium">
+                        <Label htmlFor={day} className="text-[#37322F] font-medium">
                           {day}
                         </Label>
                       </div>
@@ -267,8 +267,8 @@ export default function ClinicianProfileSetup() {
                               onClick={() => handleTimeSlotToggle(day, slot)}
                               className={`text-xs ${
                                 formData.availability[day]?.includes(slot)
-                                  ? "bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]"
-                                  : "bg-white text-[#151616] border-2 border-[#151616] hover:bg-[#D6F32F]/20 shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616]"
+                                  ? "bg-[oklch(0.6_0.2_45)] text-white border border-[oklch(0.6_0.2_45)]"
+                                  : "bg-white text-[#37322F] border border-[rgba(55,50,47,0.12)] hover:bg-[oklch(0.6_0.2_45)]/10"
                               }`}
                             >
                               {slot}
@@ -292,9 +292,9 @@ export default function ClinicianProfileSetup() {
             <Button
               type="submit"
               disabled={loading || !formData.specialization || !formData.yearsOfExperience || !formData.consultationFee || !formData.description}
-              className="bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_#151616] disabled:opacity-50 disabled:cursor-not-allowed font-poppins font-bold px-8 py-3"
+              className="bg-[oklch(0.6_0.2_45)] text-white hover:bg-[oklch(0.6_0.2_45)]/90 disabled:opacity-50 disabled:cursor-not-allowed font-sans font-semibold px-8 py-3"
             >
-              <Stethoscope className="w-4 h-4 mr-2" />
+              <Heartbeat size={16} weight="regular" className="mr-2" />
               {loading ? "Setting Up Profile..." : "Complete Profile Setup"}
             </Button>
           </motion.div>

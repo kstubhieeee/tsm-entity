@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { useHospitalStore } from '@/lib/store'
-import { Activity, Clock, TrendingUp, Users } from 'lucide-react'
+import { ChartLine, Clock, TrendUp, Users } from 'phosphor-react'
 import { useMemo } from 'react'
 
 export default function MetricsPage() {
@@ -57,114 +57,114 @@ export default function MetricsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold font-serif">Live Metrics</h1>
-        <p className="text-muted-foreground mt-1">Real-time operational performance indicators</p>
+        <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Live Metrics</h1>
+        <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time operational performance indicators</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">OPD Status</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">OPD Status</CardTitle>
+            <Users size={16} weight="regular" className="text-[rgba(55,50,47,0.80)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{metrics.opd.totalPatients}</div>
+            <div className="text-2xl font-bold text-[#37322F]">{metrics.opd.totalPatients}</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Waiting</span>
-                <span className="font-medium">{metrics.opd.waitingPatients}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Waiting</span>
+                <span className="font-medium text-[#37322F]">{metrics.opd.waitingPatients}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">In Consultation</span>
-                <span className="font-medium">{metrics.opd.inConsultation}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">In Consultation</span>
+                <span className="font-medium text-[#37322F]">{metrics.opd.inConsultation}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Bed Occupancy</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Bed Occupancy</CardTitle>
+            <ChartLine size={16} weight="regular" className="text-[rgba(55,50,47,0.80)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{metrics.beds.occupancyRate}%</div>
+            <div className="text-2xl font-bold text-[#37322F]">{metrics.beds.occupancyRate}%</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Occupied</span>
-                <span className="font-medium">{metrics.beds.occupiedBeds}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Occupied</span>
+                <span className="font-medium text-[#37322F]">{metrics.beds.occupiedBeds}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Available</span>
-                <span className="font-medium">{metrics.beds.availableBeds}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Available</span>
+                <span className="font-medium text-[#37322F]">{metrics.beds.availableBeds}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Admissions</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Admissions</CardTitle>
+            <TrendUp size={16} weight="regular" className="text-[rgba(55,50,47,0.80)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{metrics.admissions.activeAdmissions}</div>
+            <div className="text-2xl font-bold text-[#37322F]">{metrics.admissions.activeAdmissions}</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Active</span>
-                <span className="font-medium">{metrics.admissions.activeAdmissions}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Active</span>
+                <span className="font-medium text-[#37322F]">{metrics.admissions.activeAdmissions}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Today Discharges</span>
-                <span className="font-medium">{metrics.admissions.todayDischarges}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Today Discharges</span>
+                <span className="font-medium text-[#37322F]">{metrics.admissions.todayDischarges}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Inventory Status</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Inventory Status</CardTitle>
+            <Clock size={16} weight="regular" className="text-[rgba(55,50,47,0.80)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-destructive">{metrics.inventory.lowStockCount}</div>
+            <div className="text-2xl font-bold text-[oklch(0.6_0.2_45)]">{metrics.inventory.lowStockCount}</div>
             <div className="mt-2 space-y-1">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Low Stock</span>
-                <span className="font-medium">{metrics.inventory.lowStockCount}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Low Stock</span>
+                <span className="font-medium text-[#37322F]">{metrics.inventory.lowStockCount}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Critical</span>
-                <span className="font-medium text-destructive">{metrics.inventory.criticalStock}</span>
+                <span className="text-[rgba(55,50,47,0.80)]">Critical</span>
+                <span className="font-medium text-[oklch(0.6_0.2_45)]">{metrics.inventory.criticalStock}</span>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
+      <Card className="bg-white border-[rgba(55,50,47,0.12)]">
         <CardHeader>
-          <CardTitle>Department Wait Times</CardTitle>
+          <CardTitle className="text-[#37322F]">Department Wait Times</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {metrics.deptMetrics.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">No active patients</p>
+              <p className="text-center text-[rgba(55,50,47,0.80)] py-4">No active patients</p>
             ) : (
               metrics.deptMetrics.map(dept => (
-                <div key={dept.department} className="flex items-center justify-between p-3 rounded-lg border border-border">
+                <div key={dept.department} className="flex items-center justify-between p-3 rounded-lg border border-[rgba(55,50,47,0.12)]">
                   <div>
-                    <p className="font-medium">{dept.department}</p>
-                    <p className="text-sm text-muted-foreground">{dept.patients} patients waiting</p>
+                    <p className="font-medium text-[#37322F]">{dept.department}</p>
+                    <p className="text-sm text-[rgba(55,50,47,0.80)]">{dept.patients} patients waiting</p>
                   </div>
                   <div className="text-right">
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-xl font-bold">{dept.avgWait}</span>
-                      <span className="text-sm text-muted-foreground">min</span>
+                      <Clock size={16} weight="regular" className="text-[rgba(55,50,47,0.80)]" />
+                      <span className="text-xl font-bold text-[#37322F]">{dept.avgWait}</span>
+                      <span className="text-sm text-[rgba(55,50,47,0.80)]">min</span>
                     </div>
-                    <Badge variant={dept.avgWait > 30 ? 'destructive' : 'success'} className="mt-1">
+                    <Badge variant={dept.avgWait > 30 ? 'destructive' : 'default'} className="mt-1">
                       {dept.avgWait > 30 ? 'High' : 'Normal'}
                     </Badge>
                   </div>
@@ -176,9 +176,9 @@ export default function MetricsPage() {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle>Bed Distribution</CardTitle>
+            <CardTitle className="text-[#37322F]">Bed Distribution</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -191,13 +191,13 @@ export default function MetricsPage() {
                 return (
                   <div key={dept}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium">{dept}</span>
-                      <span className="text-sm text-muted-foreground">{occupied}/{total}</span>
+                      <span className="text-sm font-medium text-[#37322F]">{dept}</span>
+                      <span className="text-sm text-[rgba(55,50,47,0.80)]">{occupied}/{total}</span>
                     </div>
-                    <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[rgba(55,50,47,0.12)] rounded-full overflow-hidden">
                       <div 
                         className={`h-full transition-all ${
-                          percentage > 80 ? 'bg-destructive' : percentage > 60 ? 'bg-amber-500' : 'bg-primary'
+                          percentage > 80 ? 'bg-red-500' : percentage > 60 ? 'bg-amber-500' : 'bg-[oklch(0.6_0.2_45)]'
                         }`}
                         style={{ width: `${percentage}%` }}
                       />
@@ -209,31 +209,31 @@ export default function MetricsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle>System Health</CardTitle>
+            <CardTitle className="text-[#37322F]">System Health</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
-                <span className="font-medium">OPD System</span>
-                <Badge variant="success">Operational</Badge>
+                <span className="font-medium text-[#37322F]">OPD System</span>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
-                <span className="font-medium">Bed Management</span>
-                <Badge variant="success">Operational</Badge>
+                <span className="font-medium text-[#37322F]">Bed Management</span>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
-                <span className="font-medium">Admission System</span>
-                <Badge variant="success">Operational</Badge>
+                <span className="font-medium text-[#37322F]">Admission System</span>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
-                <span className="font-medium">Inventory Tracking</span>
-                <Badge variant="success">Operational</Badge>
+                <span className="font-medium text-[#37322F]">Inventory Tracking</span>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
-                <span className="font-medium">City Health API</span>
-                <Badge variant="success">Active</Badge>
+                <span className="font-medium text-[#37322F]">City Health API</span>
+                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Active</Badge>
               </div>
             </div>
           </CardContent>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Clock, UserPlus, CheckCircle, Loader2 } from 'lucide-react'
+import { Clock, UserPlus, CheckCircle, Spinner } from 'phosphor-react'
 import { formatDistanceToNow } from 'date-fns'
 
 const departments = ['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'General Medicine', 'Emergency']
@@ -112,7 +112,7 @@ export default function OPDPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-white" />
+        <Spinner size={32} weight="bold" className="animate-spin text-[oklch(0.6_0.2_45)]" />
       </div>
     )
   }
@@ -121,23 +121,23 @@ export default function OPDPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-semibold font-serif text-white">OPD Queue Management</h1>
-          <p className="text-neutral-400 mt-1">Real-time patient queue tracking</p>
+          <h1 className="text-3xl font-semibold font-sans text-[#37322F]">OPD Queue Management</h1>
+          <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time patient queue tracking</p>
         </div>
         <Button 
           onClick={() => setShowForm(!showForm)}
-          className="bg-white text-black hover:bg-neutral-200"
+          className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white"
           type="button"
         >
-          <UserPlus className="w-4 h-4 mr-2" />
+          <UserPlus size={16} weight="bold" className="mr-2" />
           Add Patient
         </Button>
       </div>
 
       {showForm && (
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">New Patient Registration</CardTitle>
+            <CardTitle className="text-[#37322F]">New Patient Registration</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -146,7 +146,7 @@ export default function OPDPage() {
                   placeholder="Patient Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                   required
                 />
                 <Input
@@ -154,13 +154,13 @@ export default function OPDPage() {
                   placeholder="Age"
                   value={formData.age}
                   onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                   required
                 />
                 <select
                   value={formData.gender}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value as any })}
-                  className="px-3 py-2 bg-neutral-950 border border-neutral-800 rounded-lg text-white"
+                  className="px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F]"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -170,13 +170,13 @@ export default function OPDPage() {
                   placeholder="Contact Number"
                   value={formData.contact}
                   onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                   required
                 />
                 <select
                   value={formData.department}
                   onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                  className="px-3 py-2 bg-neutral-950 border border-neutral-800 rounded-lg text-white md:col-span-2"
+                  className="px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F] md:col-span-2"
                 >
                   {departments.map(dept => (
                     <option key={dept} value={dept}>{dept}</option>
@@ -184,14 +184,14 @@ export default function OPDPage() {
                 </select>
               </div>
               <div className="flex gap-2">
-                <Button type="submit" className="bg-white text-black hover:bg-neutral-200">
+                <Button type="submit" className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white">
                   Add to Queue
                 </Button>
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setShowForm(false)} 
-                  className="border-neutral-700 text-red-400 hover:bg-neutral-800"
+                  className="border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]"
                 >
                   Cancel
                 </Button>
@@ -210,20 +210,20 @@ export default function OPDPage() {
           return (
             <Card 
               key={dept}
-              className={`cursor-pointer transition-all bg-neutral-900 border-neutral-800 hover:border-neutral-700 ${
-                selectedDept === dept ? 'ring-2 ring-white' : ''
+              className={`cursor-pointer transition-all bg-white border-[rgba(55,50,47,0.12)] hover:border-[oklch(0.6_0.2_45)] ${
+                selectedDept === dept ? 'ring-2 ring-[oklch(0.6_0.2_45)]' : ''
               }`}
               onClick={() => setSelectedDept(selectedDept === dept ? '' : dept)}
             >
               <CardContent className="pt-6">
-                <h3 className="font-semibold text-white mb-2">{dept}</h3>
-                <div className="flex items-center gap-2 text-sm text-neutral-400">
-                  <Clock className="w-4 h-4" />
+                <h3 className="font-semibold text-[#37322F] mb-2">{dept}</h3>
+                <div className="flex items-center gap-2 text-sm text-[rgba(55,50,47,0.80)]">
+                  <Clock size={16} weight="regular" />
                   <span>{avgWait} min avg wait</span>
                 </div>
                 <div className="mt-2">
-                  <span className="text-2xl font-bold text-white">{waiting}</span>
-                  <span className="text-neutral-400 ml-2">waiting</span>
+                  <span className="text-2xl font-bold text-[#37322F]">{waiting}</span>
+                  <span className="text-[rgba(55,50,47,0.80)] ml-2">waiting</span>
                 </div>
               </CardContent>
             </Card>
@@ -231,38 +231,38 @@ export default function OPDPage() {
         })}
       </div>
 
-      <Card className="bg-neutral-900 border-neutral-800">
+      <Card className="bg-white border-[rgba(55,50,47,0.12)]">
         <CardHeader>
-          <CardTitle className="text-white">
+          <CardTitle className="text-[#37322F]">
             {selectedDept ? `${selectedDept} Queue` : 'All Patients'}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {filteredQueue.length === 0 ? (
-              <p className="text-neutral-500 text-center py-8">No patients in queue</p>
+              <p className="text-[rgba(55,50,47,0.80)] text-center py-8">No patients in queue</p>
             ) : (
               filteredQueue.map((patient) => (
                 <div
                   key={patient._id}
-                  className="flex items-center justify-between p-4 bg-neutral-950 rounded-lg border border-neutral-800"
+                  className="flex items-center justify-between p-4 bg-[rgba(55,50,47,0.05)] rounded-lg border border-[rgba(55,50,47,0.12)]"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <h4 className="font-semibold text-white">{patient.name}</h4>
+                      <h4 className="font-semibold text-[#37322F]">{patient.name}</h4>
                       <Badge variant={
                         patient.status === 'waiting' ? 'default' : 
                         patient.status === 'in-consultation' ? 'secondary' : 
                         'outline'
                       } className={
-                        patient.status === 'waiting' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                        patient.status === 'in-consultation' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
-                        'bg-green-500/10 text-green-500 border-green-500/20'
+                        patient.status === 'waiting' ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' :
+                        patient.status === 'in-consultation' ? 'bg-blue-500/10 text-blue-600 border-blue-500/20' :
+                        'bg-green-500/10 text-green-600 border-green-500/20'
                       }>
                         {patient.status}
                       </Badge>
                     </div>
-                    <div className="flex gap-4 mt-2 text-sm text-neutral-400">
+                    <div className="flex gap-4 mt-2 text-sm text-[rgba(55,50,47,0.80)]">
                       <span>{patient.age}y • {patient.gender}</span>
                       <span>• {patient.department}</span>
                       <span>• {formatDistanceToNow(new Date(patient.checkInTime), { addSuffix: true })}</span>
@@ -286,7 +286,7 @@ export default function OPDPage() {
                         className="bg-green-500 hover:bg-green-600 text-white"
                         type="button"
                       >
-                        <CheckCircle className="w-4 h-4 mr-1" />
+                        <CheckCircle size={16} weight="bold" className="mr-1" />
                         Complete
                       </Button>
                     )}

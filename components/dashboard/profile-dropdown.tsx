@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useSession, signOut } from "@/lib/useSession"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, User, Settings, LogOut, Shield } from "lucide-react"
+import { CaretDown, User, Gear, SignOut, ShieldCheck } from "phosphor-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 
@@ -40,28 +40,27 @@ export function ProfileDropdown() {
         <div className="relative">
             <Button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center gap-3 px-4 py-2 border-2 border-[#151616] transition-all duration-300 font-poppins font-medium text-[#151616] ${
-                    isOpen
-                        ? "bg-gradient-to-r from-[#D6F32F] to-[#D6F32F]/80 shadow-[4px_4px_0px_0px_#151616] translate-y-1"
-                        : "bg-gradient-to-r from-[#FFFFF4] to-white shadow-[4px_4px_0px_0px_#D6F32F] hover:bg-gradient-to-r hover:from-[#D6F32F]/20 hover:to-[#D6F32F]/10 hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#D6F32F]"
-                }`}
+                variant="ghost"
+                className="flex items-center gap-3 px-3 py-2 hover:bg-[rgba(55,50,47,0.05)] transition-all duration-200 font-sans font-medium text-[#37322F]"
             >
-                <Avatar className="w-8 h-8 border-2 border-[#151616]">
+                <Avatar className="w-8 h-8 border border-[rgba(55,50,47,0.12)]">
                     <AvatarImage
                         src={session.user.image || ""}
                         alt={session.user.name || "User"}
                     />
-                    <AvatarFallback className="bg-[#D6F32F] text-[#151616] font-bold text-sm">
+                    <AvatarFallback className="bg-[oklch(0.6_0.2_45)] text-white font-semibold text-sm">
                         {session.user.name?.charAt(0) || "U"}
                     </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block text-left">
-                    <p className="text-sm font-medium">{session.user.name}</p>
-                    <p className="text-xs text-[#151616]/60">{session.user.email}</p>
+                    <p className="text-sm font-medium text-[#37322F]">{session.user.name}</p>
+                    <p className="text-xs text-[rgba(55,50,47,0.80)]">{session.user.email}</p>
                 </div>
-                <ChevronDown
-                    className={`w-4 h-4 transition-all duration-300 ${
-                        isOpen ? 'rotate-180 text-[#151616]' : 'text-[#151616]/70'
+                <CaretDown
+                    size={16}
+                    weight="bold"
+                    className={`transition-all duration-300 ${
+                        isOpen ? 'rotate-180' : ''
                     }`}
                 />
             </Button>
@@ -81,30 +80,29 @@ export function ProfileDropdown() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
-                            className="absolute right-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-0 border-2 border-[#151616] shadow-[4px_4px_0px_0px_#D6F32F] rounded-xl z-50"
+                            className="absolute right-0 top-full mt-2 w-64 bg-white border border-[rgba(55,50,47,0.12)] shadow-lg rounded-lg z-50"
                         >
-                            {/* User Info */}
-                            <div className="p-4 border-b-2 border-[#151616]">
+                            <div className="p-4 border-b border-[rgba(55,50,47,0.12)]">
                                 <div className="flex items-center gap-3">
-                                    <Avatar className="w-12 h-12 border-2 border-[#151616]">
+                                    <Avatar className="w-12 h-12 border border-[rgba(55,50,47,0.12)]">
                                         <AvatarImage
                                             src={session.user.image || ""}
                                             alt={session.user.name || "User"}
                                         />
-                                        <AvatarFallback className="bg-[#D6F32F] text-[#151616] font-bold">
+                                        <AvatarFallback className="bg-[oklch(0.6_0.2_45)] text-white font-semibold">
                                             {session.user.name?.charAt(0) || "U"}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex-1">
-                                        <p className="font-poppins font-semibold text-[#151616]">
+                                        <p className="font-sans font-semibold text-[#37322F]">
                                             {session.user.name}
                                         </p>
-                                        <p className="text-sm font-poppins text-[#151616]/60">
+                                        <p className="text-sm font-sans text-[rgba(55,50,47,0.80)]">
                                             {session.user.email}
                                         </p>
                                         <div className="flex items-center gap-1 mt-1">
-                                            <Shield className="w-3 h-3 text-[#D6F32F]" />
-                                            <span className="text-xs font-poppins text-[#151616]/60">
+                                            <ShieldCheck size={12} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
+                                            <span className="text-xs font-sans text-[rgba(55,50,47,0.80)]">
                                                 Medical Professional
                                             </span>
                                         </div>
@@ -112,37 +110,35 @@ export function ProfileDropdown() {
                                 </div>
                             </div>
 
-                            {/* Menu Items */}
                             <div className="p-2">
                                 <button
                                     onClick={() => {
                                         setIsOpen(false)
                                         router.push('/profile')
                                     }}
-                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gradient-to-r hover:from-[#D6F32F]/15 hover:to-[#D6F32F]/10 transition-all duration-200 font-poppins text-[#151616] text-sm"
+                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[rgba(55,50,47,0.05)] transition-all duration-200 font-sans text-[#37322F] text-sm"
                                 >
-                                    <User className="w-4 h-4" />
+                                    <User size={16} weight="regular" />
                                     <span>View Profile</span>
                                 </button>
 
                                 <button
                                     onClick={() => {
                                         setIsOpen(false)
-                                        // Add settings navigation logic here
                                     }}
-                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gradient-to-r hover:from-[#D6F32F]/15 hover:to-[#D6F32F]/10 transition-all duration-200 font-poppins text-[#151616] text-sm"
+                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[rgba(55,50,47,0.05)] transition-all duration-200 font-sans text-[#37322F] text-sm"
                                 >
-                                    <Settings className="w-4 h-4" />
+                                    <Gear size={16} weight="regular" />
                                     <span>Settings</span>
                                 </button>
 
-                                <div className="border-t border-[#151616]/20 my-2"></div>
+                                <div className="border-t border-[rgba(55,50,47,0.12)] my-2"></div>
 
                                 <button
                                     onClick={handleLogout}
-                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gradient-to-r hover:from-red-100 hover:to-red-50 hover:text-red-600 transition-all duration-200 font-poppins text-[#151616] text-sm"
+                                    className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200 font-sans text-[#37322F] text-sm"
                                 >
-                                    <LogOut className="w-4 h-4" />
+                                    <SignOut size={16} weight="regular" />
                                     <span>Logout</span>
                                 </button>
                             </div>

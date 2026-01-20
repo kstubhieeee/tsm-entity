@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { BedDouble, Loader2 } from 'lucide-react'
+import { Bed, Spinner } from 'phosphor-react'
 
 interface Bed {
   _id: string
@@ -60,7 +60,7 @@ export default function BedsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-white" />
+        <Spinner size={32} weight="bold" className="animate-spin text-[oklch(0.6_0.2_45)]" />
       </div>
     )
   }
@@ -68,8 +68,8 @@ export default function BedsPage() {
   if (beds.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
-        <p className="text-neutral-400">No beds found in database</p>
-        <Button onClick={initializeBeds} className="bg-white text-black hover:bg-neutral-200" type="button">
+        <p className="text-[rgba(55,50,47,0.80)]">No beds found in database</p>
+        <Button onClick={initializeBeds} className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white" type="button">
           Initialize Beds
         </Button>
       </div>
@@ -79,8 +79,8 @@ export default function BedsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold font-serif text-white">Bed Management</h1>
-        <p className="text-neutral-400 mt-1">Real-time bed availability tracking</p>
+        <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Bed Management</h1>
+        <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time bed availability tracking</p>
       </div>
 
       <div className="space-y-6">
@@ -91,21 +91,21 @@ export default function BedsPage() {
           const occupancyRate = getOccupancyRate(dept)
 
           return (
-            <Card key={dept} className="bg-neutral-900 border-neutral-800">
+            <Card key={dept} className="bg-white border-[rgba(55,50,47,0.12)]">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle className="text-white">{dept}</CardTitle>
-                    <p className="text-sm text-neutral-400 mt-1">
+                    <CardTitle className="text-[#37322F]">{dept}</CardTitle>
+                    <p className="text-sm text-[rgba(55,50,47,0.80)] mt-1">
                       {available} available • {occupied} occupied
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-white">{occupancyRate}%</div>
-                    <div className="text-xs text-neutral-400">Occupancy</div>
+                    <div className="text-2xl font-bold text-[#37322F]">{occupancyRate}%</div>
+                    <div className="text-xs text-[rgba(55,50,47,0.80)]">Occupancy</div>
                   </div>
                 </div>
-                <div className="w-full bg-neutral-800 rounded-full h-2 mt-4">
+                <div className="w-full bg-[rgba(55,50,47,0.12)] rounded-full h-2 mt-4">
                   <div
                     className={`h-2 rounded-full transition-all ${
                       occupancyRate > 80 ? 'bg-red-500' :
@@ -127,10 +127,10 @@ export default function BedsPage() {
                           : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
                       }`}
                     >
-                      <BedDouble className={`w-4 h-4 ${
+                      <Bed size={16} weight="bold" className={
                         bed.status === 'available' ? 'text-green-500' : 'text-red-500'
-                      }`} />
-                      <span className="text-xs text-white mt-1">{bed.bedNumber.split('-')[1]}</span>
+                      } />
+                      <span className="text-xs text-[#37322F] mt-1">{bed.bedNumber.split('-')[1]}</span>
                     </div>
                   ))}
                 </div>

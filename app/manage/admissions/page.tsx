@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { ClipboardPlus, Loader2, UserCheck } from 'lucide-react'
+import { Clipboard, Spinner, CheckCircle } from 'phosphor-react'
 import { format } from 'date-fns'
 
 interface Bed {
@@ -112,7 +112,7 @@ export default function AdmissionsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-white" />
+        <Spinner size={32} weight="bold" className="animate-spin text-[oklch(0.6_0.2_45)]" />
       </div>
     )
   }
@@ -121,23 +121,23 @@ export default function AdmissionsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-semibold font-serif text-white">Patient Admissions</h1>
-          <p className="text-neutral-400 mt-1">Manage hospital admissions and discharges</p>
+          <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Patient Admissions</h1>
+          <p className="text-[rgba(55,50,47,0.80)] mt-1">Manage hospital admissions and discharges</p>
         </div>
         <Button 
           onClick={() => setShowForm(!showForm)}
-          className="bg-white text-black hover:bg-neutral-200"
+          className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white"
           type="button"
         >
-          <ClipboardPlus className="w-4 h-4 mr-2" />
+          <Clipboard size={16} weight="bold" className="mr-2" />
           New Admission
         </Button>
       </div>
 
       {showForm && (
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">Patient Admission Form</CardTitle>
+            <CardTitle className="text-[#37322F]">Patient Admission Form</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -146,14 +146,14 @@ export default function AdmissionsPage() {
                   placeholder="Patient Name"
                   value={formData.patientName}
                   onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                   required
                 />
                 
                 <select
                   value={formData.department}
                   onChange={(e) => setFormData({ ...formData, department: e.target.value, bedId: '' })}
-                  className="px-3 py-2 bg-neutral-950 border border-neutral-800 rounded-lg text-white"
+                  className="px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F]"
                   required
                 >
                   <option value="">Select Department</option>
@@ -165,7 +165,7 @@ export default function AdmissionsPage() {
                 <select
                   value={formData.bedId}
                   onChange={(e) => setFormData({ ...formData, bedId: e.target.value })}
-                  className="px-3 py-2 bg-neutral-950 border border-neutral-800 rounded-lg text-white"
+                  className="px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F]"
                   required
                   disabled={!formData.department}
                 >
@@ -179,25 +179,25 @@ export default function AdmissionsPage() {
                   placeholder="Assigned Doctor"
                   value={formData.assignedDoctor}
                   onChange={(e) => setFormData({ ...formData, assignedDoctor: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                 />
 
                 <Input
                   placeholder="Diagnosis"
                   value={formData.diagnosis}
                   onChange={(e) => setFormData({ ...formData, diagnosis: e.target.value })}
-                  className="bg-neutral-950 border-neutral-800 text-white md:col-span-2"
+                  className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F] md:col-span-2"
                 />
               </div>
 
               {formData.department && availableBeds.length === 0 && (
-                <p className="text-amber-500 text-sm">No available beds in {formData.department}</p>
+                <p className="text-amber-600 text-sm">No available beds in {formData.department}</p>
               )}
 
               <div className="flex gap-2">
                 <Button 
                   type="submit" 
-                  className="bg-white text-black hover:bg-neutral-200" 
+                  className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white" 
                   disabled={!formData.department || availableBeds.length === 0}
                 >
                   Create Admission
@@ -206,7 +206,7 @@ export default function AdmissionsPage() {
                   type="button" 
                   variant="outline" 
                   onClick={() => setShowForm(false)} 
-                  className="border-neutral-700 text-red-500 hover:bg-neutral-800"
+                  className="border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]"
                 >
                   Cancel
                 </Button>
@@ -217,47 +217,47 @@ export default function AdmissionsPage() {
       )}
 
       <div className="grid gap-4">
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">Active Admissions</CardTitle>
+            <CardTitle className="text-[#37322F]">Active Admissions</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {admissions.filter(a => a.status === 'active').length === 0 ? (
-                <p className="text-neutral-500 text-center py-8">No active admissions</p>
+                <p className="text-[rgba(55,50,47,0.80)] text-center py-8">No active admissions</p>
               ) : (
                 admissions.filter(a => a.status === 'active').map((admission) => {
                   const bed = beds.find(b => b._id === admission.bedId)
                   return (
                     <div
                       key={admission._id}
-                      className="flex items-center justify-between p-4 bg-neutral-950 rounded-lg border border-neutral-800"
+                      className="flex items-center justify-between p-4 bg-[rgba(55,50,47,0.05)] rounded-lg border border-[rgba(55,50,47,0.12)]"
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-3">
-                          <h4 className="font-semibold text-white">{admission.patientName}</h4>
-                          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">
+                          <h4 className="font-semibold text-[#37322F]">{admission.patientName}</h4>
+                          <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
                             Active
                           </Badge>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 mt-2 text-sm text-neutral-400">
+                        <div className="grid grid-cols-2 gap-4 mt-2 text-sm text-[rgba(55,50,47,0.80)]">
                           <div>
-                            <span className="text-neutral-500">Department:</span> {admission.department}
+                            <span className="text-[rgba(55,50,47,0.80)]">Department:</span> {admission.department}
                           </div>
                           <div>
-                            <span className="text-neutral-500">Bed:</span> {bed?.bedNumber || 'N/A'}
+                            <span className="text-[rgba(55,50,47,0.80)]">Bed:</span> {bed?.bedNumber || 'N/A'}
                           </div>
                           {admission.assignedDoctor && (
                             <div>
-                              <span className="text-neutral-500">Doctor:</span> {admission.assignedDoctor}
+                              <span className="text-[rgba(55,50,47,0.80)]">Doctor:</span> {admission.assignedDoctor}
                             </div>
                           )}
                           <div>
-                            <span className="text-neutral-500">Admitted:</span> {format(new Date(admission.admissionDate), 'MMM dd, yyyy')}
+                            <span className="text-[rgba(55,50,47,0.80)]">Admitted:</span> {format(new Date(admission.admissionDate), 'MMM dd, yyyy')}
                           </div>
                           {admission.diagnosis && (
                             <div className="col-span-2">
-                              <span className="text-neutral-500">Diagnosis:</span> {admission.diagnosis}
+                              <span className="text-[rgba(55,50,47,0.80)]">Diagnosis:</span> {admission.diagnosis}
                             </div>
                           )}
                         </div>
@@ -267,7 +267,7 @@ export default function AdmissionsPage() {
                         className="bg-blue-500 hover:bg-blue-600 text-white"
                         type="button"
                       >
-                        <UserCheck className="w-4 h-4 mr-2" />
+                        <CheckCircle size={16} weight="bold" className="mr-2" />
                         Discharge
                       </Button>
                     </div>
@@ -278,28 +278,28 @@ export default function AdmissionsPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">Recent Discharges</CardTitle>
+            <CardTitle className="text-[#37322F]">Recent Discharges</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {admissions.filter(a => a.status === 'discharged').slice(0, 5).length === 0 ? (
-                <p className="text-neutral-500 text-center py-8">No recent discharges</p>
+                <p className="text-[rgba(55,50,47,0.80)] text-center py-8">No recent discharges</p>
               ) : (
                 admissions.filter(a => a.status === 'discharged').slice(0, 5).map((admission) => (
                   <div
                     key={admission._id}
-                    className="flex items-center justify-between p-4 bg-neutral-950 rounded-lg border border-neutral-800"
+                    className="flex items-center justify-between p-4 bg-[rgba(55,50,47,0.05)] rounded-lg border border-[rgba(55,50,47,0.12)]"
                   >
                     <div>
                       <div className="flex items-center gap-3">
-                        <h4 className="font-semibold text-white">{admission.patientName}</h4>
-                        <Badge className="bg-neutral-700 text-neutral-300">
+                        <h4 className="font-semibold text-[#37322F]">{admission.patientName}</h4>
+                        <Badge className="bg-[rgba(55,50,47,0.10)] text-[rgba(55,50,47,0.80)] border-[rgba(55,50,47,0.12)]">
                           Discharged
                         </Badge>
                       </div>
-                      <div className="flex gap-4 mt-2 text-sm text-neutral-400">
+                      <div className="flex gap-4 mt-2 text-sm text-[rgba(55,50,47,0.80)]">
                         <span>{admission.department}</span>
                         <span>• Admitted: {format(new Date(admission.admissionDate), 'MMM dd')}</span>
                       </div>

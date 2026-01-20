@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Package, AlertTriangle, TrendingDown, Loader2, Plus } from 'lucide-react'
+import { Package, Warning, TrendDown, Spinner, Plus } from 'phosphor-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 interface InventoryItem {
@@ -18,7 +18,7 @@ interface InventoryItem {
   lastRestocked: string
 }
 
-const COLORS = ['#8b5cf6', '#ec4899', '#f59e0b']
+const COLORS = ['oklch(0.6 0.2 45)', '#ec4899', '#f59e0b']
 
 export default function InventoryPage() {
   const [inventory, setInventory] = useState<InventoryItem[]>([])
@@ -91,7 +91,7 @@ export default function InventoryPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-white" />
+        <Spinner size={32} weight="bold" className="animate-spin text-[oklch(0.6_0.2_45)]" />
       </div>
     )
   }
@@ -99,8 +99,8 @@ export default function InventoryPage() {
   if (inventory.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
-        <p className="text-neutral-400">No inventory found in database</p>
-        <Button onClick={initializeInventory} className="bg-white text-black hover:bg-neutral-200" type="button">
+        <p className="text-[rgba(55,50,47,0.80)]">No inventory found in database</p>
+        <Button onClick={initializeInventory} className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white" type="button">
           Initialize Inventory
         </Button>
       </div>
@@ -110,50 +110,50 @@ export default function InventoryPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold font-serif text-white">Inventory Management</h1>
-        <p className="text-neutral-400 mt-1">Track and manage hospital supplies</p>
+        <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Inventory Management</h1>
+        <p className="text-[rgba(55,50,47,0.80)] mt-1">Track and manage hospital supplies</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-300">Total Items</CardTitle>
-            <Package className="h-5 w-5 text-purple-500" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Total Items</CardTitle>
+            <Package size={20} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-white">{inventory.length}</div>
-            <p className="text-xs text-neutral-500 mt-1">in inventory</p>
+            <div className="text-3xl font-bold text-[#37322F]">{inventory.length}</div>
+            <p className="text-xs text-[rgba(55,50,47,0.80)] mt-1">in inventory</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-300">Low Stock Alerts</CardTitle>
-            <AlertTriangle className="h-5 w-5 text-amber-500" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Low Stock Alerts</CardTitle>
+            <Warning size={20} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-amber-500">{lowStockItems.length}</div>
-            <p className="text-xs text-neutral-500 mt-1">items below threshold</p>
+            <div className="text-3xl font-bold text-[oklch(0.6_0.2_45)]">{lowStockItems.length}</div>
+            <p className="text-xs text-[rgba(55,50,47,0.80)] mt-1">items below threshold</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-neutral-300">Categories</CardTitle>
-            <TrendingDown className="h-5 w-5 text-pink-500" />
+            <CardTitle className="text-sm font-medium text-[#37322F]">Categories</CardTitle>
+            <TrendDown size={20} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-white">3</div>
-            <p className="text-xs text-neutral-500 mt-1">item categories</p>
+            <div className="text-3xl font-bold text-[#37322F]">3</div>
+            <p className="text-xs text-[rgba(55,50,47,0.80)] mt-1">item categories</p>
           </CardContent>
         </Card>
       </div>
 
       {lowStockItems.length > 0 && (
-        <Card className="bg-neutral-900 border-neutral-800 border-amber-500/20">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)] border-amber-500/20">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-amber-500" />
+            <CardTitle className="text-[#37322F] flex items-center gap-2">
+              <Warning size={20} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
               Low Stock Alerts
             </CardTitle>
           </CardHeader>
@@ -162,16 +162,16 @@ export default function InventoryPage() {
               {lowStockItems.map((item) => (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between p-4 bg-neutral-950 rounded-lg border border-neutral-800"
+                  className="flex items-center justify-between p-4 bg-[rgba(55,50,47,0.05)] rounded-lg border border-[rgba(55,50,47,0.12)]"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <h4 className="font-semibold text-white">{item.name}</h4>
-                      <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+                      <h4 className="font-semibold text-[#37322F]">{item.name}</h4>
+                      <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">
                         Low Stock
                       </Badge>
                     </div>
-                    <div className="flex gap-4 mt-2 text-sm text-neutral-400">
+                    <div className="flex gap-4 mt-2 text-sm text-[rgba(55,50,47,0.80)]">
                       <span>Current: {item.currentStock} {item.unit}</span>
                       <span>• Min: {item.minThreshold} {item.unit}</span>
                       <span>• Category: {item.category}</span>
@@ -184,12 +184,12 @@ export default function InventoryPage() {
                         value={restockQty}
                         onChange={(e) => setRestockQty(e.target.value)}
                         placeholder="Quantity"
-                        className="w-24 bg-neutral-950 border-neutral-800 text-white"
+                        className="w-24 bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                         min="1"
                       />
                       <Button 
                         onClick={() => handleRestock(item._id)} 
-                        className="bg-white text-black hover:bg-neutral-200"
+                        className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white"
                         type="button"
                       >
                         Confirm
@@ -200,7 +200,7 @@ export default function InventoryPage() {
                           setRestockItem(null)
                           setRestockQty('')
                         }} 
-                        className="border-neutral-700 text-red-400 hover:bg-neutral-800"
+                        className="border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]"
                         type="button"
                       >
                         Cancel
@@ -212,7 +212,7 @@ export default function InventoryPage() {
                       className="bg-green-500 hover:bg-green-600 text-white"
                       type="button"
                     >
-                      <Plus className="w-4 h-4 mr-2" />
+                      <Plus size={16} weight="bold" className="mr-2" />
                       Restock
                     </Button>
                   )}
@@ -224,27 +224,27 @@ export default function InventoryPage() {
       )}
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">Stock Levels</CardTitle>
+            <CardTitle className="text-[#37322F]">Stock Levels</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={stockData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#262626" />
-                <XAxis dataKey="name" stroke="#737373" />
-                <YAxis stroke="#737373" />
-                <Tooltip contentStyle={{ backgroundColor: '#171717', border: '1px solid #262626', color: '#fff' }} />
-                <Bar dataKey="stock" fill="#8b5cf6" name="Current Stock" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(55,50,47,0.12)" />
+                <XAxis dataKey="name" stroke="rgba(55,50,47,0.80)" />
+                <YAxis stroke="rgba(55,50,47,0.80)" />
+                <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid rgba(55,50,47,0.12)', color: '#37322F' }} />
+                <Bar dataKey="stock" fill="oklch(0.6 0.2 45)" name="Current Stock" />
                 <Bar dataKey="threshold" fill="#f59e0b" name="Min Threshold" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-white border-[rgba(55,50,47,0.12)]">
           <CardHeader>
-            <CardTitle className="text-white">Category Distribution</CardTitle>
+            <CardTitle className="text-[#37322F]">Category Distribution</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -256,23 +256,23 @@ export default function InventoryPage() {
                   labelLine={false}
                   label={({ name, value }) => `${name}: ${value}`}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill="oklch(0.6 0.2 45)"
                   dataKey="value"
                 >
                   {categoryData.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#171717', border: '1px solid #262626', color: '#fff' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid rgba(55,50,47,0.12)', color: '#37322F' }} />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="bg-neutral-900 border-neutral-800">
+      <Card className="bg-white border-[rgba(55,50,47,0.12)]">
         <CardHeader>
-          <CardTitle className="text-white">All Inventory Items</CardTitle>
+          <CardTitle className="text-[#37322F]">All Inventory Items</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -281,21 +281,21 @@ export default function InventoryPage() {
               return (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between p-4 bg-neutral-950 rounded-lg border border-neutral-800"
+                  className="flex items-center justify-between p-4 bg-[rgba(55,50,47,0.05)] rounded-lg border border-[rgba(55,50,47,0.12)]"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
-                      <h4 className="font-semibold text-white">{item.name}</h4>
-                      <Badge variant="outline" className="text-neutral-400 border-neutral-700">
+                      <h4 className="font-semibold text-[#37322F]">{item.name}</h4>
+                      <Badge variant="outline" className="text-[rgba(55,50,47,0.80)] border-[rgba(55,50,47,0.12)]">
                         {item.category}
                       </Badge>
                     </div>
                     <div className="mt-2">
-                      <div className="flex justify-between text-sm text-neutral-400 mb-1">
+                      <div className="flex justify-between text-sm text-[rgba(55,50,47,0.80)] mb-1">
                         <span>{item.currentStock} {item.unit}</span>
                         <span>Min: {item.minThreshold}</span>
                       </div>
-                      <div className="w-full bg-neutral-800 rounded-full h-2">
+                      <div className="w-full bg-[rgba(55,50,47,0.12)] rounded-full h-2">
                         <div
                           className={`h-2 rounded-full transition-all ${
                             stockPercent <= 100 ? 'bg-red-500' :
@@ -314,13 +314,13 @@ export default function InventoryPage() {
                         value={restockQty}
                         onChange={(e) => setRestockQty(e.target.value)}
                         placeholder="Quantity"
-                        className="w-24 bg-neutral-950 border-neutral-800 text-white"
+                        className="w-24 bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                         min="1"
                       />
                       <Button 
                         onClick={() => handleRestock(item._id)} 
                         size="sm" 
-                        className="bg-white text-black hover:bg-neutral-200"
+                        className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white"
                         type="button"
                       >
                         Add
@@ -332,7 +332,7 @@ export default function InventoryPage() {
                           setRestockItem(null)
                           setRestockQty('')
                         }} 
-                        className="border-neutral-700 text-red-400 hover:bg-neutral-800"
+                        className="border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]"
                         type="button"
                       >
                         Cancel
@@ -342,10 +342,10 @@ export default function InventoryPage() {
                     <Button 
                       onClick={() => setRestockItem(item._id)} 
                       size="sm" 
-                      className="ml-4 bg-neutral-800 hover:bg-neutral-700 text-white"
+                      className="ml-4 bg-[rgba(55,50,47,0.05)] hover:bg-[rgba(55,50,47,0.10)] text-[#37322F] border border-[rgba(55,50,47,0.12)]"
                       type="button"
                     >
-                      <Plus className="w-4 h-4 mr-1" />
+                      <Plus size={16} weight="bold" className="mr-1" />
                       Restock
                     </Button>
                   )}
