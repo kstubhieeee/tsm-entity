@@ -11,13 +11,13 @@ import {
   Clock,
   Calendar,
   User,
-  IndianRupee,
+  CurrencyInr,
   CheckCircle,
   ArrowLeft,
   CreditCard,
-  Stethoscope,
+  Heartbeat,
   Coins
-} from "lucide-react"
+} from "phosphor-react"
 import CoinDiscount from "@/components/payment/coin-discount"
 
 interface Doctor {
@@ -180,7 +180,7 @@ export default function AppointmentsPage() {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "CuraLink",
+        name: "Medira",
         description: `Consultation with ${selectedDoctor.name}`,
         order_id: orderData.orderId,
         handler: async function (response: any) {
@@ -192,7 +192,7 @@ export default function AppointmentsPage() {
           contact: "9999999999"
         },
         theme: {
-          color: "#D6F32F"
+          color: "oklch(0.6_0.2_45)"
         },
         modal: {
           ondismiss: function () {
@@ -348,7 +348,7 @@ export default function AppointmentsPage() {
 
   if (currentStep === "booking" && selectedDoctor) {
     return (
-      <div className="min-h-screen bg-[#FFFFF4] p-6">
+      <div className="min-h-screen bg-white p-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -357,15 +357,15 @@ export default function AppointmentsPage() {
           >
             <Button
               onClick={() => setCurrentStep("doctors")}
-              className="mb-4 bg-white text-[#151616] border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616]"
+              className="mb-4 bg-white text-[#37322F] border border-[rgba(55,50,47,0.12)] hover:bg-[rgba(55,50,47,0.05)]"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft size={16} weight="regular" className="mr-2" />
               Back to Doctors
             </Button>
-            <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-2">
+            <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-2">
               Book Appointment
             </h1>
-            <p className="text-[#151616]/70 font-poppins">
+            <p className="text-[rgba(55,50,47,0.80)] font-sans">
               Schedule your consultation with {selectedDoctor.name}
             </p>
           </motion.div>
@@ -376,38 +376,38 @@ export default function AppointmentsPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] bg-white">
+              <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm bg-white">
                 <CardHeader className="bg-white">
-                  <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
-                    <User className="w-6 h-6 text-blue-600" />
+                  <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
+                    <User size={24} weight="regular" className="text-blue-600" />
                     Doctor Details
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="bg-white space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                      <Stethoscope className="w-8 h-8 text-[#151616]" />
+                    <div className="w-16 h-16 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center">
+                      <Heartbeat size={32} weight="regular" className="text-white" />
                     </div>
                     <div>
-                      <h3 className="font-poppins font-bold text-[#151616] text-lg">
+                      <h3 className="font-sans font-semibold text-[#37322F] text-lg">
                         {selectedDoctor.name}
                       </h3>
-                      <p className="text-[#151616]/70">{selectedDoctor.specialization}</p>
+                      <p className="text-[rgba(55,50,47,0.80)]">{selectedDoctor.specialization}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                        <Star size={16} weight="fill" className="text-yellow-500" />
                         <span className="text-sm font-medium">{selectedDoctor.rating}</span>
-                        <span className="text-sm text-[#151616]/70">• {selectedDoctor.experience}</span>
+                        <span className="text-sm text-[rgba(55,50,47,0.80)]">• {selectedDoctor.experience}</span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-[#151616]/70 text-sm">{selectedDoctor.bio}</p>
-                  <div className="flex items-center gap-2 p-3 bg-[#D6F32F]/20 rounded-xl border-2 border-[#151616]">
-                    <IndianRupee className="w-5 h-5 text-green-600" />
-                    <span className="font-bold text-[#151616]">
-                      ₹{selectedDoctor.consultationFee.toLocaleString()}
-                    </span>
-                    <span className="text-[#151616]/70 text-sm">consultation fee</span>
-                  </div>
+                  <p className="text-[rgba(55,50,47,0.80)] text-sm">{selectedDoctor.bio}</p>
+                    <div className="flex items-center gap-2 p-3 bg-[oklch(0.6_0.2_45)]/10 rounded-lg border border-[oklch(0.6_0.2_45)]">
+                      <CurrencyInr size={20} weight="regular" className="text-green-600" />
+                      <span className="font-semibold text-[#37322F]">
+                        ₹{selectedDoctor.consultationFee.toLocaleString()}
+                      </span>
+                      <span className="text-[rgba(55,50,47,0.80)] text-sm">consultation fee</span>
+                    </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -417,10 +417,10 @@ export default function AppointmentsPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] bg-white">
+              <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm bg-white">
                 <CardHeader className="bg-white">
-                  <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
-                    <Calendar className="w-6 h-6 text-green-600" />
+                  <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
+                    <Calendar size={24} weight="regular" className="text-green-600" />
                     Select Schedule
                   </CardTitle>
                 </CardHeader>
@@ -430,7 +430,7 @@ export default function AppointmentsPage() {
                       Available Days
                     </label>
                     <Select onValueChange={setSelectedDay}>
-                      <SelectTrigger className="border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]">
+                      <SelectTrigger className="border border-[rgba(55,50,47,0.12)]">
                         <SelectValue placeholder="Select a day" />
                       </SelectTrigger>
                       <SelectContent>
@@ -448,7 +448,7 @@ export default function AppointmentsPage() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                     >
-                      <label className="block text-sm font-medium text-[#151616] mb-2">
+                      <label className="block text-sm font-medium text-[#37322F] mb-2">
                         Available Time Slots
                       </label>
                       <div className="grid grid-cols-3 gap-2">
@@ -456,9 +456,9 @@ export default function AppointmentsPage() {
                           <Button
                             key={slot}
                             onClick={() => setSelectedTime(slot)}
-                            className={`text-sm font-medium border-2 border-[#151616] transition-all ${selectedTime === slot
-                                ? "bg-[#D6F32F] text-[#151616] shadow-[2px_2px_0px_0px_#151616]"
-                                : "bg-white text-[#151616] hover:bg-[#D6F32F]/20 shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616]"
+                            className={`text-sm font-medium border transition-all ${selectedTime === slot
+                                ? "bg-[oklch(0.6_0.2_45)] text-white border-[oklch(0.6_0.2_45)]"
+                                : "bg-white text-[#37322F] hover:bg-[oklch(0.6_0.2_45)]/10 border-[rgba(55,50,47,0.12)]"
                               }`}
                           >
                             {slot}
@@ -490,7 +490,7 @@ export default function AppointmentsPage() {
                             Discounted Fee: <span className="text-lg">₹{discountData.finalAmount.toLocaleString()}</span>
                           </p>
                           <p className="flex items-center gap-1">
-                            <Coins className="h-4 w-4 text-yellow-500" />
+                            <Coins size={16} weight="regular" className="text-yellow-500" />
                             <span>100 coins used • 20% discount applied</span>
                           </p>
                         </div>
@@ -518,9 +518,9 @@ export default function AppointmentsPage() {
                   <Button
                     onClick={handleBookAppointment}
                     disabled={!selectedDay || !selectedTime || loading}
-                    className="w-full bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_#151616] disabled:opacity-50 disabled:cursor-not-allowed font-poppins font-bold"
+                    className="w-full bg-[oklch(0.6_0.2_45)] text-white hover:bg-[oklch(0.6_0.2_45)]/90 disabled:opacity-50 disabled:cursor-not-allowed font-sans font-semibold"
                   >
-                    <CreditCard className="w-4 h-4 mr-2" />
+                    <CreditCard size={16} weight="regular" className="mr-2" />
                     {loading
                       ? "Processing..."
                       : `Pay ₹${discountData.useCoinDiscount ? discountData.finalAmount : selectedDoctor.consultationFee} & Book`
@@ -536,17 +536,17 @@ export default function AppointmentsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFF4] p-6">
+    <div className="min-h-screen bg-white p-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-2">
+          <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-2">
             Book Your Appointment
           </h1>
-          <p className="text-[#151616]/70 font-poppins">
+          <p className="text-[rgba(55,50,47,0.80)] font-sans">
             Choose from our experienced doctors and schedule your consultation
           </p>
         </motion.div>
@@ -558,7 +558,7 @@ export default function AppointmentsPage() {
             transition={{ delay: 0.1 }}
             className="mb-8"
           >
-            <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] bg-white">
+            <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm bg-white">
               <CardHeader className="bg-white">
                 <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
                   <Calendar className="w-6 h-6 text-blue-600" />
@@ -570,21 +570,21 @@ export default function AppointmentsPage() {
                   {appointments.map((appointment) => (
                     <div
                       key={appointment.id}
-                      className="p-4 bg-white rounded-xl border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616]"
+                      className="p-4 bg-white rounded-lg border border-[rgba(55,50,47,0.12)] shadow-sm"
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <h4 className="font-poppins font-bold text-[#151616]">
+                          <h4 className="font-sans font-semibold text-[#37322F]">
                             {appointment.doctorName}
                           </h4>
-                          <p className="text-sm text-[#151616]/70">{appointment.specialization}</p>
+                          <p className="text-sm text-[rgba(55,50,47,0.80)]">{appointment.specialization}</p>
                           <div className="flex items-center gap-4 mt-1">
                             <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4 text-green-600" />
+                              <Calendar size={16} weight="regular" className="text-green-600" />
                               <span className="text-sm">{formatDate(appointment.date)}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-4 h-4 text-blue-600" />
+                              <Clock size={16} weight="regular" className="text-blue-600" />
                               <span className="text-sm">{appointment.time}</span>
                             </div>
                           </div>
@@ -593,7 +593,7 @@ export default function AppointmentsPage() {
                           <Badge className="bg-green-100 text-green-800 border-green-200">
                             {appointment.status}
                           </Badge>
-                          <p className="text-sm font-bold text-[#151616] mt-1">
+                          <p className="text-sm font-semibold text-[#37322F] mt-1">
                             ₹{appointment.consultationFee.toLocaleString()}
                           </p>
                         </div>
@@ -614,19 +614,19 @@ export default function AppointmentsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + index * 0.1 }}
             >
-              <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616] transition-all duration-200 cursor-pointer h-full">
+              <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer h-full">
                 <CardContent className="bg-white p-6">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-16 h-16 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                      <Stethoscope className="w-8 h-8 text-[#151616]" />
+                    <div className="w-16 h-16 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center">
+                      <Heartbeat size={32} weight="regular" className="text-white" />
                     </div>
                     <div>
-                      <h3 className="font-poppins font-bold text-[#151616] text-lg">
+                      <h3 className="font-sans font-semibold text-[#37322F] text-lg">
                         {doctor.name}
                       </h3>
                       <p className="text-[#151616]/70">{doctor.specialization}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                        <Star size={16} weight="fill" className="text-yellow-500" />
                         <span className="text-sm font-medium">{doctor.rating}</span>
                         <span className="text-sm text-[#151616]/70">• {doctor.experience}</span>
                       </div>
@@ -637,8 +637,8 @@ export default function AppointmentsPage() {
 
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <IndianRupee className="w-4 h-4 text-green-600" />
-                      <span className="font-bold text-[#151616]">
+                      <CurrencyInr size={16} weight="regular" className="text-green-600" />
+                      <span className="font-semibold text-[#37322F]">
                         ₹{doctor.consultationFee.toLocaleString()}
                       </span>
                     </div>
@@ -666,11 +666,11 @@ export default function AppointmentsPage() {
                     </div>
                   </div>
 
-                  <Button
+                    <Button
                     onClick={() => handleDoctorSelect(doctor)}
-                    className="w-full bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all duration-200 font-poppins font-medium"
+                    className="w-full bg-[oklch(0.6_0.2_45)] text-white hover:bg-[oklch(0.6_0.2_45)]/90 transition-all duration-200 font-sans font-semibold"
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
+                    <Calendar size={16} weight="regular" className="mr-2" />
                     Book Appointment
                   </Button>
                 </CardContent>

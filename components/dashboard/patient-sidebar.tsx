@@ -15,28 +15,27 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import {
-  Home,
+  House,
   Activity,
   Calendar,
   FileText,
-  MessageCircle,
-  Settings,
+  ChatCircle,
+  Gear,
   Heart,
   Pill,
-  TrendingUp,
+  TrendUp,
   User,
-  LogOut,
-  Stethoscope,
-  ClipboardList,
-  HeartHandshake
-} from "lucide-react"
+  SignOut,
+  ClipboardText,
+  Handshake
+} from "phosphor-react"
 import { signOut } from "@/lib/useSession"
 
 const navigationItems = [
   {
     title: "Dashboard",
     href: "/patient/dashboard",
-    icon: Home,
+    icon: House,
     description: "Overview of your health"
   },
   {
@@ -48,7 +47,7 @@ const navigationItems = [
   {
     title: "Prescription",
     href: "/patient/lab-analyzer",
-    icon: ClipboardList,
+    icon: ClipboardText,
     description: "Lab reports and prescriptions"
   },
   {
@@ -60,7 +59,7 @@ const navigationItems = [
   {
     title: "Medi Support",
     href: "/patient/medi-support",
-    icon: HeartHandshake,
+    icon: Handshake,
     description: "AI-powered medical support"
   },
   {
@@ -72,7 +71,7 @@ const navigationItems = [
   {
     title: "History",
     href: "/patient/history",
-    icon: TrendingUp,
+    icon: TrendUp,
     description: "Appointments & payments"
   }
 ]
@@ -82,21 +81,21 @@ export function PatientSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
-    <Sidebar className="border-r-2 border-[#151616] bg-white">
-      <SidebarHeader className="border-b-2 border-[#151616] p-4">
+    <Sidebar className="border-r border-[rgba(55,50,47,0.12)] bg-white">
+      <SidebarHeader className="border-b border-[rgba(55,50,47,0.12)] p-4">
         <Link href="/patient/dashboard" className="flex items-center gap-3">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="w-10 h-10 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center"
+            className="w-10 h-10 bg-[oklch(0.6_0.2_45)] rounded-lg flex items-center justify-center"
           >
-            <Heart className="w-6 h-6 text-[#151616]" />
+            <Heart size={24} weight="bold" className="text-white" />
           </motion.div>
           {!isCollapsed && (
             <div>
-              <h1 className="text-xl font-instrument-serif font-bold text-[#151616]">
-                CuraLink
+              <h1 className="text-xl font-sans font-semibold text-[#37322F]">
+                Medira
               </h1>
-              <p className="text-sm font-poppins text-[#151616]/70">
+              <p className="text-xs font-sans text-[rgba(55,50,47,0.80)]">
                 Patient Portal
               </p>
             </div>
@@ -105,7 +104,7 @@ export function PatientSidebar() {
       </SidebarHeader>
 
       <SidebarContent className="p-4">
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {navigationItems.map((item, index) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -119,15 +118,15 @@ export function PatientSidebar() {
               >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 font-poppins font-medium group ${isActive
-                    ? "bg-[#D6F32F] border-[#151616] shadow-[2px_2px_0px_0px_#151616] text-[#151616]"
-                    : "border-transparent hover:border-[#151616] hover:bg-[#FFFFF4] hover:shadow-[2px_2px_0px_0px_#151616] text-[#151616]/70 hover:text-[#151616]"
-                    }`}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 font-sans font-medium group ${
+                    isActive
+                      ? "bg-[oklch(0.6_0.2_45)] text-white"
+                      : "text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)] hover:text-[#37322F]"
+                  }`}
                 >
-                  <Icon className={`w-5 h-5 transition-colors flex-shrink-0 ${isActive ? "text-[#151616]" : "text-[#151616]/60 group-hover:text-[#151616]"
-                    }`} />
+                  <Icon size={20} weight={isActive ? "bold" : "regular"} />
                   {!isCollapsed && (
-                    <span className="font-medium text-sm">{item.title}</span>
+                    <span className="text-sm">{item.title}</span>
                   )}
                 </Link>
               </motion.div>
@@ -136,12 +135,13 @@ export function PatientSidebar() {
         </nav>
       </SidebarContent>
 
-      <SidebarFooter className="border-t-2 border-[#151616] p-4">
+      <SidebarFooter className="border-t border-[rgba(55,50,47,0.12)] p-4">
         <Button
           onClick={() => signOut({ callbackUrl: '/login' })}
-          className="w-full bg-white hover:bg-red-50 text-red-600 border-2 border-red-600 shadow-[2px_2px_0px_0px_#red-600] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#red-600] transition-all duration-200 font-poppins font-medium"
+          variant="ghost"
+          className="w-full hover:bg-red-50 text-red-600 hover:text-red-700 font-sans"
         >
-          <LogOut className="w-4 h-4 mr-2" />
+          <SignOut size={16} weight="regular" className="mr-2" />
           {!isCollapsed && "Sign Out"}
         </Button>
       </SidebarFooter>

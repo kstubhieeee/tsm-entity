@@ -17,35 +17,35 @@ const flowSteps = [
     input: "Raw symptoms",
     output: '["Fever", "Headache", "Body Pain"]',
     icon: <Brain className="w-5 h-5 text-white" />,
-    color: "#D6F32F"
+    color: "oklch(0.6_0.2_45)"
   },
   {
     agent: "Literature Agent", 
     input: "Symptom patterns",
     output: "[Dengue, Flu, Malaria]",
     icon: <Brain className="w-5 h-5 text-white" />,
-    color: "#D6F32F"
+    color: "oklch(0.6_0.2_45)"
   },
   {
     agent: "Database Agent",
     input: "Current trends",
     output: "Dengue cases high in this city",
     icon: <Brain className="w-5 h-5 text-white" />,
-    color: "#D6F32F"
+    color: "oklch(0.6_0.2_45)"
   },
   {
     agent: "Case History Agent",
     input: "Similar cases",
     output: "Mostly dengue confirm hue",
     icon: <Brain className="w-5 h-5 text-white" />,
-    color: "#D6F32F"
+    color: "oklch(0.6_0.2_45)"
   },
   {
     agent: "Risk Agent",
     input: "Patient profile",
     output: "Age 25, low risk except mosquito exposure",
     icon: <Brain className="w-5 h-5 text-white" />,
-    color: "#D6F32F"
+    color: "oklch(0.6_0.2_45)"
   },
   {
     agent: "Coordinator",
@@ -128,17 +128,17 @@ export const ExampleFlow = () => {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-12 text-center"
         >
-          <Card className="max-w-2xl mx-auto bg-[#D6F32F] border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+          <Card className="max-w-2xl mx-auto bg-[oklch(0.6_0.2_45)] border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
             <CardHeader>
-              <CardTitle className="text-2xl font-poppins font-bold text-[#151616]">
+              <CardTitle className="text-2xl font-poppins font-bold text-white">
                 Final Result for Doctor
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg font-poppins font-semibold text-[#151616] mb-4">
+              <p className="text-lg font-poppins font-semibold text-white mb-4">
                 &ldquo;Most probable: Dengue (80%), Possible: Flu (15%), Malaria (5%)&rdquo;
               </p>
-              <p className="text-sm font-poppins text-[#151616]/80">
+              <p className="text-sm font-poppins text-white/80">
                 Evidence-based diagnosis with confidence scores aur supporting data
               </p>
             </CardContent>

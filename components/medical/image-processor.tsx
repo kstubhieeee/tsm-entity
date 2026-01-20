@@ -162,7 +162,7 @@ export function ImageProcessor() {
         <div
           className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 ${
             dragActive 
-              ? "border-[#D6F32F] bg-[#D6F32F]/10" 
+              ? "border-[oklch(0.6_0.2_45)] bg-[oklch(0.6_0.2_45)]/10" 
               : "border-[#151616]/30 hover:border-[#151616]/50"
           }`}
           onDragEnter={handleDrag}
@@ -267,7 +267,7 @@ export function ImageProcessor() {
                         size="sm"
                         onClick={() => analyzeImage(image.id)}
                         disabled={image.processing}
-                        className="bg-[#D6F32F] hover:bg-[#D6F32F]/90 text-[#151616] border-2 border-[#151616] font-poppins font-medium"
+                        className="bg-[oklch(0.6_0.2_45)] hover:bg-[oklch(0.6_0.2_45)]/90 text-white border-2 border-[#151616] font-poppins font-medium"
                       >
                         {image.processing ? (
                           <>

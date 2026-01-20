@@ -92,7 +92,7 @@ export const DropdownExamples = () => {
         </div>
 
         {/* Display selected values */}
-        <div className="p-4 bg-white rounded-xl border-2 border-[#151616] shadow-[2px_2px_0px_0px_#D6F32F] max-w-2xl">
+        <div className="p-4 bg-white rounded-xl border-2 border-[#151616] shadow-[2px_2px_0px_0px_oklch(0.6_0.2_45)] max-w-2xl">
           <h3 className="font-semibold text-[#151616] mb-2">Selected Values:</h3>
           <p className="text-[#151616]/70">Blood Group: {selectedBloodGroup || "None selected"}</p>
           <p className="text-[#151616]/70">Gender: {selectedGender || "None selected"}</p>

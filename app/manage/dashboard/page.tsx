@@ -71,7 +71,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Operational Command View</h1>
+        <h1 className="text-3xl font-instrument-serif text-[#37322F]">Operational Command View</h1>
         <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time hospital operations monitoring</p>
       </div>
 

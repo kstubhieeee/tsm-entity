@@ -15,18 +15,18 @@ import {
     Clock,
     Flame,
     Star,
-    Award,
-    TrendingUp,
+    Medal,
+    TrendUp,
     Users,
     Calendar,
     Plus,
-    Zap,
+    Lightning,
     Heart,
     Activity,
-    Stethoscope,
-    UserCheck,
+    Heartbeat,
+    UserCircle,
     CreditCard,
-} from "lucide-react";
+} from "phosphor-react";
 import { PaymentHistory } from "@/components/patient/payment-history";
 import { AppointmentHistory } from "@/components/patient/appointment-history";
 import VideoTaskVerification from "@/components/dashboard/video-task-verification";
@@ -71,17 +71,17 @@ export default function PatientDashboard() {
     const renderAvatarIcon = (iconName: string) => {
         switch (iconName) {
             case "Trophy":
-                return <Trophy className="w-6 h-6 text-yellow-600" />; // Gold for winner
+                return <Trophy size={24} weight="regular" className="text-yellow-600" />; // Gold for winner
             case "Stethoscope":
-                return <Stethoscope className="w-6 h-6 text-blue-600" />; // Blue for medical
+                return <Heartbeat size={24} weight="regular" className="text-blue-600" />; // Blue for medical
             case "UserCheck":
-                return <UserCheck className="w-6 h-6 text-green-600" />; // Green for verified
+                return <UserCircle size={24} weight="regular" className="text-green-600" />; // Green for verified
             case "Zap":
-                return <Zap className="w-6 h-6 text-orange-500" />; // Orange for energy
+                return <Lightning size={24} weight="regular" className="text-orange-500" />; // Orange for energy
             case "Heart":
-                return <Heart className="w-6 h-6 text-red-500" />; // Red for health/heart
+                return <Heart size={24} weight="regular" className="text-red-500" />; // Red for health/heart
             default:
-                return <Users className="w-6 h-6 text-gray-600" />; // Gray for default
+                return <Users size={24} weight="regular" className="text-gray-600" />; // Gray for default
         }
     };
 
@@ -265,17 +265,17 @@ export default function PatientDashboard() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-[#FFFFF4] flex items-center justify-center">
+            <div className="min-h-screen bg-white flex items-center justify-center">
                 <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-[#151616]/30 border-t-[#151616] rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-[#151616]/70 font-poppins">Loading your health dashboard...</p>
+                    <div className="w-12 h-12 border-4 border-[rgba(55,50,47,0.30)] border-t-[#37322F] rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-[rgba(55,50,47,0.80)] font-sans">Loading your health dashboard...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[#FFFFF4] p-6 relative">
+        <div className="min-h-screen bg-white p-6 relative">
             {/* Coins Display - Upper Right Corner */}
             <motion.div
                 initial={{ opacity: 0, scale: 0 }}
@@ -283,9 +283,9 @@ export default function PatientDashboard() {
                 transition={{ delay: 0.2 }}
                 className="fixed top-20 right-6 z-50"
             >
-                <div className="bg-white border-2 border-[#151616] rounded-2xl shadow-[4px_4px_0px_0px_#D6F32F] px-4 py-2 flex items-center gap-2">
-                    <Coins className="w-6 h-6 text-yellow-500" />
-                    <span className="font-bold text-[#151616] text-lg">{userCoins.toLocaleString()}</span>
+                <div className="bg-white border border-[rgba(55,50,47,0.12)] rounded-lg shadow-sm px-4 py-2 flex items-center gap-2">
+                    <Coins size={24} weight="regular" className="text-yellow-500" />
+                    <span className="font-semibold text-[#37322F] text-lg">{userCoins.toLocaleString()}</span>
                 </div>
             </motion.div>
 
@@ -296,10 +296,10 @@ export default function PatientDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center"
                 >
-                    <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-2">
+                    <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-2">
                         Health Challenge Hub
                     </h1>
-                    <p className="text-[#151616]/70 font-poppins">
+                    <p className="text-[rgba(55,50,47,0.80)] font-sans">
                         Complete daily health tasks, earn coins, and climb the leaderboard!
                     </p>
                 </motion.div>
@@ -313,7 +313,7 @@ export default function PatientDashboard() {
                             exit={{ opacity: 0, scale: 0, y: -50 }}
                             className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
                         >
-                            <div className="bg-[#D6F32F] text-[#151616] px-6 py-4 rounded-2xl border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] flex items-center gap-2">
+                            <div className="bg-[oklch(0.6_0.2_45)] text-white px-6 py-4 rounded-lg border border-[oklch(0.6_0.2_45)] shadow-sm flex items-center gap-2">
                                 <Coins className="w-6 h-6" />
                                 <span className="font-bold text-xl">+{earnedCoins} Coins!</span>
                             </div>
@@ -328,15 +328,15 @@ export default function PatientDashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                     >
-                        <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                             <CardContent className="p-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                                        <Trophy className="w-6 h-6 text-yellow-600" />
+                                    <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-lg flex items-center justify-center">
+                                        <Trophy size={24} weight="regular" className="text-white" />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[#151616]/70 font-poppins">Level</p>
-                                        <p className="text-2xl font-bold text-[#151616]">{userLevel}</p>
+                                        <p className="text-sm text-[rgba(55,50,47,0.80)] font-sans">Level</p>
+                                        <p className="text-2xl font-semibold text-[#37322F]">{userLevel}</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -348,15 +348,15 @@ export default function PatientDashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
-                        <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                             <CardContent className="p-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                                        <Flame className="w-6 h-6 text-orange-500" />
+                                    <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-lg flex items-center justify-center">
+                                        <Flame size={24} weight="regular" className="text-white" />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[#151616]/70 font-poppins">Streak</p>
-                                        <p className="text-2xl font-bold text-[#151616]">{userStreak} days</p>
+                                        <p className="text-sm text-[rgba(55,50,47,0.80)] font-sans">Streak</p>
+                                        <p className="text-2xl font-semibold text-[#37322F]">{userStreak} days</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -368,15 +368,15 @@ export default function PatientDashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                     >
-                        <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                        <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                             <CardContent className="p-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                                        <Target className="w-6 h-6 text-blue-600" />
+                                    <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-lg flex items-center justify-center">
+                                        <Target size={24} weight="regular" className="text-white" />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[#151616]/70 font-poppins">Today's Progress</p>
-                                        <p className="text-2xl font-bold text-[#151616]">{completedTasksCount}/{totalTasks}</p>
+                                        <p className="text-sm text-[rgba(55,50,47,0.80)] font-sans">Today's Progress</p>
+                                        <p className="text-2xl font-semibold text-[#37322F]">{completedTasksCount}/{totalTasks}</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -392,14 +392,14 @@ export default function PatientDashboard() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                         >
-                            <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                            <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                                 <CardHeader>
                                     <div className="flex items-center justify-between">
-                                        <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
+                                        <CardTitle className="font-sans font-semibold text-[#37322F] flex items-center gap-2">
                                             <Calendar className="w-6 h-6 text-green-600" />
                                             Daily Health Tasks
                                         </CardTitle>
-                                        <Badge className="bg-[#D6F32F] text-[#151616] border-[#151616]">
+                                        <Badge className="bg-[oklch(0.6_0.2_45)] text-white border-none">
                                             {completedTasksCount}/{totalTasks} Complete
                                         </Badge>
                                     </div>
@@ -414,23 +414,23 @@ export default function PatientDashboard() {
                                                 initial={{ opacity: 0, x: -20 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: 0.6 + index * 0.1 }}
-                                                className={`p-4 rounded-xl border-2 border-[#151616] transition-all duration-200 ${task.completed
-                                                    ? "bg-[#D6F32F]/20 shadow-[2px_2px_0px_0px_#151616]"
-                                                    : "bg-white shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616]"
-                                                    }`}
+                                                className={`p-4 rounded-lg border transition-all duration-200 ${task.completed
+                                                    ? "bg-[oklch(0.6_0.2_45)]/10 border-[oklch(0.6_0.2_45)] shadow-sm"
+                                                    : "bg-white border-[rgba(55,50,47,0.12)] shadow-sm hover:shadow-md"
+                                                }`}
                                             >
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-4">
-                                                        <div className={`w-12 h-12 rounded-xl border-2 border-[#151616] flex items-center justify-center ${task.completed ? "bg-[#D6F32F]" : "bg-white"
+                                                        <div className={`w-12 h-12 rounded-lg border flex items-center justify-center ${task.completed ? "bg-[oklch(0.6_0.2_45)] border-[oklch(0.6_0.2_45)]" : "bg-white border-[rgba(55,50,47,0.12)]"
                                                             }`}>
                                                             {task.completed ? (
-                                                                <CheckCircle className="w-6 h-6 text-[#151616]" />
+                                                                <CheckCircle size={24} weight="regular" className="text-white" />
                                                             ) : (
-                                                                <Icon className={`w-6 h-6 ${task.category === "fitness" ? "text-red-600" :
+                                                                <Icon size={24} weight="regular" className={`${task.category === "fitness" ? "text-red-600" :
                                                                     task.category === "nutrition" ? "text-green-600" :
                                                                         task.category === "wellness" ? "text-blue-600" :
                                                                             task.category === "medical" ? "text-purple-600" :
-                                                                                "text-[#151616]"
+                                                                                "text-[#37322F]"
                                                                     }`} />
                                                             )}
                                                         </div>
@@ -465,7 +465,7 @@ export default function PatientDashboard() {
                                                         {!task.completed && (
                                                             <Button
                                                                 onClick={() => handleTaskComplete(task)}
-                                                                className="bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all duration-200 font-poppins font-medium"
+                                                                className="bg-[oklch(0.6_0.2_45)] text-white border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all duration-200 font-poppins font-medium"
                                                             >
                                                                 {task.category === 'fitness' || task.category === 'wellness' ? 'Verify with Video' : 'Complete'}
                                                             </Button>
@@ -487,7 +487,7 @@ export default function PatientDashboard() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.7 }}
                         >
-                            <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                            <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                                 <CardHeader>
                                     <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
                                         <Trophy className="w-6 h-6 text-yellow-600" />
@@ -502,7 +502,7 @@ export default function PatientDashboard() {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: 0.8 + index * 0.1 }}
                                             className={`p-3 rounded-xl border-2 border-[#151616] ${user.name === "You"
-                                                ? "bg-[#D6F32F]/30 shadow-[2px_2px_0px_0px_#151616]"
+                                                ? "bg-[oklch(0.6_0.2_45)]/30 shadow-[2px_2px_0px_0px_#151616]"
                                                 : "bg-white shadow-[2px_2px_0px_0px_#151616]"
                                                 }`}
                                         >
@@ -531,7 +531,7 @@ export default function PatientDashboard() {
                                                             <span>{user.coins.toLocaleString()}</span>
                                                         </div>
                                                         <div className="flex items-center gap-1">
-                                                            <Award className="w-3 h-3 text-purple-600" />
+                                                            <Medal size={12} weight="regular" className="text-purple-600" />
                                                             <span>Lv.{user.level}</span>
                                                         </div>
                                                         <div className="flex items-center gap-1">
@@ -554,10 +554,10 @@ export default function PatientDashboard() {
                             transition={{ delay: 1.2 }}
                             className="mt-6"
                         >
-                            <Card className="border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616]">
+                            <Card className="border border-[rgba(55,50,47,0.12)] shadow-sm">
                                 <CardHeader>
                                     <CardTitle className="font-instrument-serif font-bold text-[#151616] flex items-center gap-2">
-                                        <Zap className="w-6 h-6 text-purple-600" />
+                                        <Lightning size={24} weight="regular" className="text-purple-600" />
                                         Quick Stats
                                     </CardTitle>
                                 </CardHeader>

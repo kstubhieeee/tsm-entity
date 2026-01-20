@@ -68,7 +68,7 @@ export default function PatientsPage() {
     <div className="p-6 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-2">Patient Management</h1>
+          <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-2">Patient Management</h1>
           <p className="text-[rgba(55,50,47,0.80)] font-sans">Manage patient cases and medical records</p>
         </div>
 

@@ -167,7 +167,7 @@ export default function HealthCallButton({ assistantId }: HealthCallButtonProps)
               value={phoneNumber}
               onChange={handlePhoneNumberChange}
               disabled={isLoading}
-              className={`pl-3 pr-10 py-3 bg-white border-2 ${!isValidNumber ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-[#151616] focus:ring-[#D6F32F] focus:border-[#D6F32F]'} rounded-xl font-poppins`}
+              className={`pl-3 pr-10 py-3 bg-white border-2 ${!isValidNumber ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-[#151616] focus:ring-[oklch(0.6_0.2_45)] focus:border-[oklch(0.6_0.2_45)]'} rounded-xl font-poppins`}
             />
             {!isValidNumber && (
               <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
@@ -190,7 +190,7 @@ export default function HealthCallButton({ assistantId }: HealthCallButtonProps)
         <Button
           onClick={initiateCall}
           disabled={isLoading || !isValidNumber}
-          className="w-full bg-[#D6F32F] hover:bg-[#D6F32F]/80 text-[#151616] font-poppins font-bold border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all py-3 rounded-xl text-base"
+          className="w-full bg-[oklch(0.6_0.2_45)] hover:bg-[oklch(0.6_0.2_45)]/80 text-white font-poppins font-bold border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all py-3 rounded-xl text-base"
         >
           {isLoading ? (
             <>
@@ -217,7 +217,7 @@ export default function HealthCallButton({ assistantId }: HealthCallButtonProps)
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent className="sm:max-w-md border-2 border-[#151616] bg-white shadow-[4px_4px_0px_0px_#151616] rounded-2xl">
           <DialogHeader>
-            <div className="mx-auto bg-[#D6F32F]/20 rounded-full w-16 h-16 flex items-center justify-center mb-4 border-2 border-[#151616]">
+            <div className="mx-auto bg-[oklch(0.6_0.2_45)]/20 rounded-full w-16 h-16 flex items-center justify-center mb-4 border-2 border-[#151616]">
               <CheckCircle2 className="h-9 w-9 text-[#151616]" />
             </div>
             <DialogTitle className="text-center text-xl text-[#151616] font-poppins font-bold">Health Consultation Call Initiated!</DialogTitle>
@@ -226,7 +226,7 @@ export default function HealthCallButton({ assistantId }: HealthCallButtonProps)
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col space-y-3 p-4 bg-[#D6F32F]/10 rounded-xl border border-[#151616]/20">
+          <div className="flex flex-col space-y-3 p-4 bg-[oklch(0.6_0.2_45)]/10 rounded-xl border border-[#151616]/20">
             <div className="flex justify-center items-center gap-2">
               <PhoneCall className="h-5 w-5 text-[#151616]" />
               <p className="text-[#151616] font-poppins font-bold">Get ready to answer your phone</p>
@@ -247,7 +247,7 @@ export default function HealthCallButton({ assistantId }: HealthCallButtonProps)
           <DialogFooter className="sm:justify-center">
             <Button
               onClick={() => setShowSuccessDialog(false)}
-              className="bg-[#D6F32F] hover:bg-[#D6F32F]/80 text-[#151616] font-poppins font-bold border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all rounded-xl"
+              className="bg-[oklch(0.6_0.2_45)] hover:bg-[oklch(0.6_0.2_45)]/80 text-white font-poppins font-bold border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all rounded-xl"
             >
               Got it
             </Button>

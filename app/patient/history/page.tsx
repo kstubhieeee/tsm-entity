@@ -7,17 +7,17 @@ import { AppointmentHistory } from "@/components/patient/appointment-history"
 
 export default function HistoryPage() {
   return (
-    <div className="min-h-screen bg-[#FFFFF4] p-6">
+    <div className="min-h-screen bg-white p-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-instrument-serif font-bold text-[#151616] mb-2">
+          <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-2">
             Medical History
           </h1>
-          <p className="text-[#151616]/70 font-poppins">
+          <p className="text-[rgba(55,50,47,0.80)] font-sans">
             View your appointment history and payment transactions
           </p>
         </motion.div>

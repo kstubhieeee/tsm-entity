@@ -118,8 +118,8 @@ export function AppointmentHistory() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center">
-                        <Stethoscope className="w-6 h-6 text-[#151616]" />
+                      <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center">
+                        <Stethoscope className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h4 className="font-poppins font-bold text-[#151616]">
@@ -228,7 +228,7 @@ export function AppointmentHistory() {
               ))}
 
               {pastAppointments.length > 0 && (
-                <div className="mt-6 p-4 bg-[#D6F32F]/20 rounded-xl border-2 border-[#151616]">
+                <div className="mt-6 p-4 bg-[oklch(0.6_0.2_45)]/20 rounded-xl border-2 border-[#151616]">
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="font-poppins font-bold text-[#151616]">Total Consultations</h4>

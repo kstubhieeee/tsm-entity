@@ -65,7 +65,7 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
       {/* Hero section with blurred gradient background */}
       <div className="relative overflow-hidden py-12">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#D6F32F]/5 via-transparent to-[#151616]/5" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[oklch(0.6_0.2_45)]/5 via-transparent to-[#151616]/5" />
           <div className="absolute inset-0"
             style={{
               backgroundImage: `radial-gradient(circle at 2px 2px, rgba(21, 22, 22, 0.08) 1px, transparent 1px)`,
@@ -119,7 +119,7 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
             <CardContent className="pt-6">
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#D6F32F]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
+                  <div className="bg-[oklch(0.6_0.2_45)]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
                     <Phone className="h-4 w-4" />
                   </div>
                   <div>
@@ -129,7 +129,7 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#D6F32F]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
+                  <div className="bg-[oklch(0.6_0.2_45)]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
                     <HeartHandshake className="h-4 w-4" />
                   </div>
                   <div>
@@ -139,7 +139,7 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#D6F32F]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
+                  <div className="bg-[oklch(0.6_0.2_45)]/20 rounded-full p-2 text-[#151616] border border-[#151616]/20">
                     <MessageSquare className="h-4 w-4" />
                   </div>
                   <div>
@@ -171,8 +171,8 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="bg-white border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616] transition-all duration-200 rounded-2xl">
               <CardHeader>
-                <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
-                  <Activity className="w-6 h-6 text-[#151616]" />
+                <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
+                  <Activity className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-xl font-bold text-[#151616]">Symptom Analysis</CardTitle>
                 <CardDescription className="text-[#151616]/70">
@@ -183,8 +183,8 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
 
             <Card className="bg-white border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616] transition-all duration-200 rounded-2xl">
               <CardHeader>
-                <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-[#151616]" />
+                <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-xl font-bold text-[#151616]">Medical Knowledge</CardTitle>
                 <CardDescription className="text-[#151616]/70">
@@ -195,8 +195,8 @@ const HealthMentorUI: React.FC<HealthMentorUIProps> = ({ assistantId }) => {
 
             <Card className="bg-white border-2 border-[#151616] shadow-[4px_4px_0px_0px_#151616] hover:translate-y-1 hover:shadow-[2px_2px_0px_0px_#151616] transition-all duration-200 rounded-2xl">
               <CardHeader>
-                <div className="w-12 h-12 bg-[#D6F32F] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-[#151616]" />
+                <div className="w-12 h-12 bg-[oklch(0.6_0.2_45)] rounded-xl border-2 border-[#151616] flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-xl font-bold text-[#151616]">Personalized Care</CardTitle>
                 <CardDescription className="text-[#151616]/70">

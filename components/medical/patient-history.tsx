@@ -221,7 +221,7 @@ export function PatientHistory({ userId }: { userId: string }) {
                   size="sm"
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="bg-[#D6F32F] hover:bg-[#D6F32F]/90 text-[#151616] border-2 border-[#151616] font-poppins"
+                  className="bg-[oklch(0.6_0.2_45)] hover:bg-[oklch(0.6_0.2_45)]/90 text-white border-2 border-[#151616] font-poppins"
                 >
                   {isSaving ? (
                     <div className="w-4 h-4 border-2 border-[#151616]/30 border-t-[#151616] rounded-full animate-spin mr-2" />

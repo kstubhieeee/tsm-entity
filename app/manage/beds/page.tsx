@@ -79,7 +79,7 @@ export default function BedsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Bed Management</h1>
+        <h1 className="text-3xl font-instrument-serif text-[#37322F]">Bed Management</h1>
         <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time bed availability tracking</p>
       </div>
 
@@ -107,11 +107,10 @@ export default function BedsPage() {
                 </div>
                 <div className="w-full bg-[rgba(55,50,47,0.12)] rounded-full h-2 mt-4">
                   <div
-                    className={`h-2 rounded-full transition-all ${
-                      occupancyRate > 80 ? 'bg-red-500' :
+                    className={`h-2 rounded-full transition-all ${occupancyRate > 80 ? 'bg-red-500' :
                       occupancyRate > 60 ? 'bg-amber-500' :
-                      'bg-green-500'
-                    }`}
+                        'bg-green-500'
+                      }`}
                     style={{ width: `${occupancyRate}%` }}
                   />
                 </div>
@@ -121,11 +120,10 @@ export default function BedsPage() {
                   {deptBeds.map((bed) => (
                     <div
                       key={bed._id}
-                      className={`aspect-square rounded-lg flex flex-col items-center justify-center p-2 border transition-all ${
-                        bed.status === 'available'
-                          ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
-                          : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
-                      }`}
+                      className={`aspect-square rounded-lg flex flex-col items-center justify-center p-2 border transition-all ${bed.status === 'available'
+                        ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
+                        : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
+                        }`}
                     >
                       <Bed size={16} weight="bold" className={
                         bed.status === 'available' ? 'text-green-500' : 'text-red-500'

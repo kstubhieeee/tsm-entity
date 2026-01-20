@@ -23,8 +23,8 @@ export default function PatientLayout({
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FFFFF4]">
-        <div className="w-8 h-8 border-4 border-[#151616]/30 border-t-[#151616] rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-8 h-8 border-4 border-[rgba(55,50,47,0.30)] border-t-[#37322F] rounded-full animate-spin"></div>
       </div>
     )
   }
@@ -35,11 +35,11 @@ export default function PatientLayout({
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-[#FFFFF4]">
+      <div className="min-h-screen flex w-full bg-white">
         <PatientSidebar />
         <div className="flex-1">
           <DashboardHeader userRole="patient" />
-          <main className="p-6">
+          <main className="p-6 bg-white">
             {children}
           </main>
         </div>

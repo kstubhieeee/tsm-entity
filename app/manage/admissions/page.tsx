@@ -121,7 +121,7 @@ export default function AdmissionsPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-semibold font-sans text-[#37322F]">Patient Admissions</h1>
+          <h1 className="text-3xl font-instrument-serif text-[#37322F]">Patient Admissions</h1>
           <p className="text-[rgba(55,50,47,0.80)] mt-1">Manage hospital admissions and discharges</p>
         </div>
         <Button 

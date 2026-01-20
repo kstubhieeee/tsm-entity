@@ -52,7 +52,7 @@ export default function AIOrchestrationPage() {
             type: "symptom-analysis" as const,
             description: "Analyzes and structures patient symptoms",
             icon: Brain,
-            color: "#D6F32F"
+            color: "oklch(0.6_0.2_45)"
         },
         {
             name: "ResearchBot",
@@ -66,7 +66,7 @@ export default function AIOrchestrationPage() {
             type: "health-database" as const,
             description: "Monitors health databases and epidemiological trends",
             icon: Database,
-            color: "#D6F32F"
+            color: "oklch(0.6_0.2_45)"
         },
         {
             name: "PatternSeeker",
@@ -925,7 +925,7 @@ export default function AIOrchestrationPage() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-8"
                 >
-                    <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-4">
+                    <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-4">
                         AI Agent Orchestration System
                     </h1>
                     <p className="text-lg font-sans text-[rgba(55,50,47,0.80)] max-w-3xl mx-auto">
@@ -1157,7 +1157,7 @@ export default function AIOrchestrationPage() {
                                             >
                                                 <div className={`relative mx-auto w-16 h-16 rounded-full border-2 border-[#151616] flex items-center justify-center mb-2 transition-all duration-300 ${
                                                     isCompleted ? 'bg-green-500' :
-                                                    isProcessing ? 'bg-[#D6F32F] animate-pulse' : 
+                                                    isProcessing ? 'bg-[oklch(0.6_0.2_45)] animate-pulse' : 
                                                     isActive ? 'bg-yellow-500' : 'bg-white'
                                                 }`}>
                                                     {isCompleted ? (
@@ -1170,7 +1170,7 @@ export default function AIOrchestrationPage() {
                                                     
                                                     {isActive && !isCompleted && (
                                                         <motion.div
-                                                            className="absolute inset-0 rounded-full border-2 border-[#D6F32F]"
+                                                            className="absolute inset-0 rounded-full border-2 border-[oklch(0.6_0.2_45)]"
                                                             animate={{ scale: [1, 1.2, 1] }}
                                                             transition={{ repeat: Infinity, duration: 1.5 }}
                                                         />
@@ -1249,7 +1249,7 @@ export default function AIOrchestrationPage() {
                                     </div>
                                     <Button
                                         onClick={() => setShowAllReports(!showAllReports)}
-                                        className="bg-[#D6F32F] text-[#151616] border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all duration-200 font-poppins font-bold"
+                                        className="bg-[oklch(0.6_0.2_45)] text-white border-2 border-[#151616] shadow-[2px_2px_0px_0px_#151616] hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#151616] transition-all duration-200 font-poppins font-bold"
                                     >
                                         {showAllReports ? "Hide" : "Show All Agent Reports"}
                                         <ArrowRight className="w-4 h-4 ml-2" />
@@ -1285,11 +1285,11 @@ export default function AIOrchestrationPage() {
                                                         <div className="flex items-center gap-3 mb-2">
                                                             <div
                                                                 className="w-12 h-12 rounded-xl border-2 border-[#151616] flex items-center justify-center"
-                                                                style={{ backgroundColor: agent.color === "#D6F32F" ? "#D6F32F" : "white" }}
+                                                                style={{ backgroundColor: agent.color === "oklch(0.6_0.2_45)" ? "oklch(0.6_0.2_45)" : "white" }}
                                                             >
                                                                 <Icon
                                                                     className="w-6 h-6"
-                                                                    style={{ color: "#151616" }}
+                                                                    style={{ color: agent.color === "oklch(0.6_0.2_45)" ? "white" : "#151616" }}
                                                                 />
                                                             </div>
                                                             <div>
@@ -1323,7 +1323,7 @@ export default function AIOrchestrationPage() {
                                                                     <h5 className="font-poppins font-semibold text-[#151616] text-sm">Structured Symptoms:</h5>
                                                                     <div className="flex flex-wrap gap-1">
                                                                         {agentResult.result.structuredSymptoms.map((symptom: string, idx: number) => (
-                                                                            <Badge key={idx} className="bg-[#D6F32F] text-[#151616] text-xs">
+                                                                            <Badge key={idx} className="bg-[oklch(0.6_0.2_45)] text-white text-xs">
                                                                                 {symptom}
                                                                             </Badge>
                                                                         ))}

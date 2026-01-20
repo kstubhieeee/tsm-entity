@@ -130,7 +130,7 @@ export default function MedicalDashboard() {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-sans font-bold text-[#37322F] mb-2">
+          <h1 className="text-4xl font-instrument-serif text-[#37322F] mb-2">
             Medical AI Command Center
           </h1>
           <p className="text-xl font-sans text-[rgba(55,50,47,0.80)]">

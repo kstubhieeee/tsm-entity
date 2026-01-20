@@ -209,7 +209,7 @@ export default function SignInPage() {
                   >
                     <Icon size={32} weight="bold" className="text-white" />
                   </div>
-                  <h1 className="text-[#37322F] text-3xl md:text-4xl font-semibold leading-tight font-sans mb-2">
+                  <h1 className="text-[#37322F] text-3xl md:text-4xl leading-tight font-instrument-serif mb-2">
                     {currentRole.label}
                   </h1>
                   <p className="text-[rgba(55,50,47,0.80)] text-base font-normal leading-6 font-sans">
