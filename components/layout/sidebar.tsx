@@ -13,21 +13,21 @@ import {
 } from 'lucide-react'
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'OPD Queue', href: '/opd', icon: Users },
-  { name: 'Bed Management', href: '/beds', icon: BedDouble },
-  { name: 'Admissions', href: '/admissions', icon: ClipboardPlus },
-  { name: 'Inventory', href: '/inventory', icon: Package },
-  { name: 'Live Metrics', href: '/metrics', icon: Activity },
+  { name: 'Dashboard', href: '/manage/dashboard', icon: LayoutDashboard },
+  { name: 'OPD Queue', href: '/manage/opd', icon: Users },
+  { name: 'Bed Management', href: '/manage/beds', icon: BedDouble },
+  { name: 'Admissions', href: '/manage/admissions', icon: ClipboardPlus },
+  { name: 'Inventory', href: '/manage/inventory', icon: Package },
+  { name: 'Live Metrics', href: '/manage/metrics', icon: Activity },
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full w-64 flex-col border-r border-border bg-white">
-      <div className="flex h-16 items-center border-b border-border px-6">
-        <h1 className="text-xl font-semibold font-serif text-foreground">Hospital Operations</h1>
+    <div className="flex h-full w-64 flex-col border-r border-neutral-800 bg-neutral-950">
+      <div className="flex h-16 items-center border-b border-neutral-800 px-6 bg-gradient-to-r from-neutral-900 to-neutral-950">
+        <h1 className="text-xl font-semibold font-serif text-white">TSM Entity</h1>
       </div>
       
       <nav className="flex-1 space-y-1 p-4">
@@ -40,10 +40,10 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all',
                 isActive
-                  ? 'bg-primary text-white'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  ? 'bg-white text-black'
+                  : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'
               )}
             >
               <Icon className="h-5 w-5" />
@@ -53,13 +53,13 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="border-t border-border p-4">
-        <div className="rounded-lg bg-blue-50 p-3">
-          <p className="text-xs font-medium text-blue-900">
-            City Health Integration
+      <div className="border-t border-neutral-800 p-4">
+        <div className="rounded-lg bg-neutral-900 p-3 border border-neutral-800">
+          <p className="text-xs font-medium text-white">
+            Hospital Management
           </p>
-          <p className="mt-1 text-xs text-blue-600">
-            API endpoints active
+          <p className="mt-1 text-xs text-neutral-500">
+            Operational Command Center
           </p>
         </div>
       </div>
