@@ -4,31 +4,31 @@
   --font-sans: var(--font-poppins);
   --font-serif: var(--font-instrument-serif);
 
-  --color-background: #FFFFF4;
-  --color-foreground: #1a1a1a;
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
   
-  --color-primary: #2563eb;
-  --color-primary-foreground: #ffffff;
+  --color-primary: #ffffff;
+  --color-primary-foreground: #0a0a0a;
   
-  --color-secondary: #f5f5f0;
-  --color-secondary-foreground: #1a1a1a;
+  --color-secondary: #1a1a1a;
+  --color-secondary-foreground: #fafafa;
   
-  --color-muted: #f5f5f0;
-  --color-muted-foreground: #737373;
+  --color-muted: #262626;
+  --color-muted-foreground: #a3a3a3;
   
-  --color-accent: #f5f5f0;
-  --color-accent-foreground: #1a1a1a;
+  --color-accent: #171717;
+  --color-accent-foreground: #fafafa;
   
-  --color-destructive: #dc2626;
+  --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
 
-  --color-border: #e5e5e0;
-  --color-input: #e5e5e0;
-  --color-ring: #2563eb;
+  --color-border: #262626;
+  --color-input: #1a1a1a;
+  --color-ring: #525252;
 
-  --radius-lg: 0.5rem;
-  --radius-md: calc(0.5rem - 2px);
-  --radius-sm: calc(0.5rem - 4px);
+  --radius-lg: 0.75rem;
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
 }
 
 @layer base {

@@ -1,0 +1,144 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { BedDouble, Loader2 } from 'lucide-react'
+
+interface Bed {
+  _id: string
+  department: string
+  bedNumber: string
+  status: 'available' | 'occupied'
+  lastUpdated: string
+}
+
+export default function BedsPage() {
+  const [beds, setBeds] = useState<Bed[]>([])
+  const [loading, setLoading] = useState(true)
+
+  const fetchBeds = async () => {
+    try {
+      const response = await fetch('/api/manage/beds')
+      const data = await response.json()
+      setBeds(data.beds || [])
+    } catch (error) {
+      console.error('Failed to fetch beds:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const initializeBeds = async () => {
+    try {
+      setLoading(true)
+      await fetch('/api/manage/init', { method: 'POST' })
+      await fetchBeds()
+    } catch (error) {
+      console.error('Failed to initialize:', error)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchBeds()
+  }, [])
+
+  const departments = Array.from(new Set(beds.map(b => b.department)))
+
+  const getBedsByDepartment = (dept: string) => {
+    return beds.filter(b => b.department === dept)
+  }
+
+  const getOccupancyRate = (dept: string) => {
+    const deptBeds = getBedsByDepartment(dept)
+    const occupied = deptBeds.filter(b => b.status === 'occupied').length
+    return Math.round((occupied / deptBeds.length) * 100)
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader2 className="w-8 h-8 animate-spin text-white" />
+      </div>
+    )
+  }
+
+  if (beds.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-4">
+        <p className="text-neutral-400">No beds found in database</p>
+        <Button onClick={initializeBeds} className="bg-white text-black hover:bg-neutral-200" type="button">
+          Initialize Beds
+        </Button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-semibold font-serif text-white">Bed Management</h1>
+        <p className="text-neutral-400 mt-1">Real-time bed availability tracking</p>
+      </div>
+
+      <div className="space-y-6">
+        {departments.map(dept => {
+          const deptBeds = getBedsByDepartment(dept)
+          const available = deptBeds.filter(b => b.status === 'available').length
+          const occupied = deptBeds.filter(b => b.status === 'occupied').length
+          const occupancyRate = getOccupancyRate(dept)
+
+          return (
+            <Card key={dept} className="bg-neutral-900 border-neutral-800">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="text-white">{dept}</CardTitle>
+                    <p className="text-sm text-neutral-400 mt-1">
+                      {available} available • {occupied} occupied
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-white">{occupancyRate}%</div>
+                    <div className="text-xs text-neutral-400">Occupancy</div>
+                  </div>
+                </div>
+                <div className="w-full bg-neutral-800 rounded-full h-2 mt-4">
+                  <div
+                    className={`h-2 rounded-full transition-all ${
+                      occupancyRate > 80 ? 'bg-red-500' :
+                      occupancyRate > 60 ? 'bg-amber-500' :
+                      'bg-green-500'
+                    }`}
+                    style={{ width: `${occupancyRate}%` }}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
+                  {deptBeds.map((bed) => (
+                    <div
+                      key={bed._id}
+                      className={`aspect-square rounded-lg flex flex-col items-center justify-center p-2 border transition-all ${
+                        bed.status === 'available'
+                          ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
+                          : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
+                      }`}
+                    >
+                      <BedDouble className={`w-4 h-4 ${
+                        bed.status === 'available' ? 'text-green-500' : 'text-red-500'
+                      }`} />
+                      <span className="text-xs text-white mt-1">{bed.bedNumber.split('-')[1]}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
+    </div>
+  )
+}

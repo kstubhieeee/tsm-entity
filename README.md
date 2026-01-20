@@ -1,200 +1,271 @@
-# Hospital Operations Platform
+# TSM Entity - Healthcare Management Platform
 
-Intelligent hospital operations platform for optimizing patient flow and resource utilization.
+A comprehensive healthcare management platform with role-based portals for hospitals, doctors, and patients.
 
-## Phase 1 - Completed Modules
+## 🚀 Quick Start
 
-### 1. Operational Command View (Dashboard)
-- Real-time overview of all hospital operations
-- Live metrics: OPD queue, bed occupancy, admissions, inventory alerts
-- Dynamic charts: OPD load by department, admission trends, bed occupancy, inventory status
-- All data computed from real-time state (no dummy data)
+### Prerequisites
+- Node.js 20+
+- MongoDB Atlas account
+- npm or yarn
 
-### 2. Dynamic OPD Queue Management
-- Real-time patient check-in system
-- Department-wise queue visualization
-- Priority-based sequencing (check-in time + department priority)
-- Average wait time calculation per department
-- Patient status tracking (waiting, in-consultation, completed)
-- Live queue updates
+### Installation
 
-### 3. Live Bed Availability Dashboard
-- Real-time bed status across all departments
-- Department-wise bed categorization
-- Visual indicators (available/occupied)
-- Occupancy rate tracking
-- Bed allocation for admissions
-- Last updated timestamps
-
-### 4. Rule-Based Admission Workflow
-- Guided admission form with validation
-- Department-based bed matching
-- Real-time bed availability checking
-- Prevents double-booking of beds
-- Admission and discharge tracking
-- Patient-bed-department linkage
-
-### 5. Inventory Usage Tracking
-- Medicines, consumables, and equipment tracking
-- Real-time stock levels
-- Low-stock alerts (threshold-based)
-- Usage trend charts
-- Category-wise inventory overview
-- Restock functionality
-- Consumption history
-
-### 6. Live Metrics Dashboard
-- Real-time operational KPIs
-- Department-wise wait times
-- Bed distribution analytics
-- System health monitoring
-- Patient flow metrics
-
-### 7. Inter-Hospital Capacity Sharing API
-- REST API endpoint: `/api/capacity`
-- Exposes anonymized operational data
-- Designed for city-level health coordination
-- Returns: bed availability, patient load, wait times, operational status
-
-## Tech Stack
-
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **State Management**: Zustand
-- **Charts**: Recharts
-- **Icons**: Lucide React
-- **Date Handling**: date-fns
-
-## Architecture
-
-### State Management
-- Centralized store using Zustand (`lib/store.ts`)
-- Real-time data synchronization
-- Computed metrics and aggregations
-- Modular actions for each domain
-
-### Component Structure
-```
-components/
-  ui/           - Reusable UI components (Button, Card, Badge, etc.)
-  layout/       - Layout components (Sidebar, Header)
-  
-app/
-  page.tsx      - Dashboard
-  opd/          - OPD Queue Management
-  beds/         - Bed Availability
-  admissions/   - Admission Workflow
-  inventory/    - Inventory Tracking
-  metrics/      - Live Metrics
-  api/capacity/ - Public API for city integration
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd tsm-entity
 ```
 
-### Data Models
-- **Patient**: OPD queue entries with priority calculation
-- **Bed**: Department-wise bed tracking with status
-- **Admission**: Patient admission records with bed allocation
-- **InventoryItem**: Stock tracking with usage history
-
-## Features
-
-### Real-Time Updates
-- All dashboards update dynamically
-- No page refresh needed
-- Live calculations for wait times, occupancy rates
-- Instant inventory alerts
-
-### Rule-Based Logic
-- Priority sequencing for OPD (Emergency department gets +50 priority)
-- Bed allocation validation (prevents double-booking)
-- Inventory threshold alerts
-- Department-specific bed matching
-
-### Data Integrity
-- Bed status automatically updates on admission/discharge
-- Queue automatically sorted by priority
-- Inventory decrements tracked per admission
-- Historical data preserved
-
-## Design System
-
-- **Primary Color**: Dark (oklch format)
-- **Background**: Off-white (#FFFFF4)
-- **Typography**: Poppins (body), Instrument Serif (headings)
-- **Border Radius**: 0.5rem (rounded-lg)
-- **Consistent spacing and padding
-- Professional medical UI aesthetic
-
-## API Documentation
-
-### GET /api/capacity
-
-Returns anonymized hospital capacity data for city-level coordination.
-
-**Response:**
-```json
-{
-  "hospitalId": "HSP-001",
-  "hospitalName": "City General Hospital",
-  "timestamp": "2026-01-19T...",
-  "bedAvailability": {
-    "cardiology": { "total": 10, "available": 4 },
-    "neurology": { "total": 10, "available": 2 },
-    ...
-  },
-  "patientLoad": {
-    "opdQueue": 12,
-    "activeAdmissions": 42,
-    "emergencyCases": 3
-  },
-  "averageWaitTime": {
-    "cardiology": 25,
-    "neurology": 35,
-    ...
-  },
-  "status": "operational"
-}
-```
-
-## Running the Project
-
+2. Install dependencies
 ```bash
 npm install
+```
+
+3. Set up environment variables
+
+Create a `.env.local` file in the root:
+```env
+MONGODB_URI=mongodb+srv://your-username:your-password@cluster.mongodb.net/?appName=TSM-Entity
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+```
+
+4. Run the development server
+```bash
 npm run dev
 ```
 
-Navigate to http://localhost:3000
+5. Open [http://localhost:3000](http://localhost:3000)
 
-## Phase 2 - Future Extensions (Prepared)
+## 📁 Project Structure
 
-The codebase is structured to easily integrate CuraLink AI features:
+```
+tsm-entity/
+├── app/
+│   ├── auth/              # Authentication pages
+│   ├── manage/            # Hospital management portal
+│   ├── doctor/            # Doctor portal
+│   ├── patient/           # Patient portal
+│   └── api/               # API routes
+├── components/
+│   ├── ui/                # Reusable UI components
+│   └── layout/            # Layout components
+├── lib/
+│   ├── mongodb.ts         # Database connection
+│   ├── auth.ts            # Authentication utilities
+│   ├── models.ts          # Database models
+│   └── store.ts           # State management
+└── middleware.ts          # Route protection
+```
 
-### Doctor Dashboard
-- Multi-agent orchestration
-- AI-assisted diagnostics
-- RAG system for medical cases
-- Doctor control interface
+## 🎯 Features
 
-### Patient Dashboard
-- Gamification system (coins, leaderboard)
-- AI task verification
-- Medicine analyzer with OCR
-- Telegram reminders
-- AI medical support
-- Appointment booking
+### Phase 1 (Current) - Hospital Management ✅
 
-### Extensibility Points
-- Modular component structure
-- Separate route structure ready
-- State management can be extended
-- API layer prepared for expansion
-- Design system consistent for new features
+#### Complete Hospital Operations
+- **Dashboard**: Real-time operational metrics and analytics
+- **OPD Queue**: Patient check-in and queue management
+- **Bed Management**: Track bed availability across departments
+- **Admissions**: Patient admission and discharge workflows
+- **Inventory**: Stock management with low-stock alerts
+- **Live Metrics**: System-wide health monitoring
 
-## Development Notes
+#### Authentication System
+- Email/password authentication
+- Role-based access control (Hospital/Doctor/Patient)
+- Secure JWT sessions
+- Protected routes with middleware
+- Comprehensive registration forms
 
-- All data is computed from real state (no hardcoded values)
-- Charts use actual aggregated data
-- Responsive design for mobile/tablet/desktop
-- Clean, human-like code structure
-- Config-based approach throughout
-- No unnecessary comments (self-documenting code)
+#### Database Integration
+- MongoDB Atlas connection
+- Three separate collections for role segregation
+- Persistent data storage
+- Secure password hashing
+
+### Phase 2 (Planned) - Doctor & Patient Portals
+
+#### Doctor Portal
+- Patient appointment scheduling
+- AI-powered diagnosis assistance
+- Electronic prescription system
+- Patient health records management
+- Medical imaging analysis
+
+#### Patient Portal
+- Book doctor appointments
+- View medical records and history
+- AI-powered symptom checker
+- Prescription management
+- Health tracking and analytics
+
+## 🔐 Authentication
+
+### Three Role Types
+
+1. **Hospital Management**
+   - Access to operational command center
+   - Manage beds, admissions, inventory
+   - View system-wide metrics
+
+2. **Doctor**
+   - Patient management (Phase 2)
+   - Medical tools and AI assistance (Phase 2)
+   - Prescription writing (Phase 2)
+
+3. **Patient**
+   - Appointment booking (Phase 2)
+   - Health records access (Phase 2)
+   - Personal health tracking (Phase 2)
+
+### How It Works
+
+1. Visit `/auth/signup` to create an account
+2. Select your role (Hospital/Doctor/Patient)
+3. Fill in the role-specific registration form
+4. Get redirected to your role-specific dashboard
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Language**: TypeScript
+- **Database**: MongoDB Atlas
+- **Authentication**: JWT + bcryptjs
+- **Styling**: Tailwind CSS v4
+- **State Management**: Zustand
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **UI Components**: Custom component library
+
+## 📊 Database Schema
+
+### Collections
+
+1. **hospitals** - Hospital management accounts
+   - Hospital information
+   - Bed capacity
+   - Admin details
+   - Contact information
+
+2. **doctors** - Doctor accounts
+   - Professional credentials
+   - Specialization
+   - Availability
+   - Consultation fees
+
+3. **patients** - Patient accounts
+   - Personal information
+   - Medical history
+   - Emergency contacts
+   - Health records
+
+## 🎨 Design System
+
+- **Primary Color**: Blue (#2563eb) - Professional healthcare
+- **Hospital Theme**: Blue tones
+- **Doctor Theme**: Green tones
+- **Patient Theme**: Purple tones
+- **Typography**: Poppins (sans-serif) + Instrument Serif (headings)
+- **Layout**: Clean, modern, mobile-responsive
+
+## 🔒 Security
+
+- Password hashing with bcryptjs (12 salt rounds)
+- JWT tokens with 7-day expiration
+- HTTP-only secure cookies
+- Protected API routes
+- Role-based middleware
+- Input validation and sanitization
+
+## 📝 Scripts
+
+```bash
+npm run dev      # Start development server (Turbopack)
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## 🗂️ Key Files
+
+- `middleware.ts` - Route protection and role-based access
+- `lib/mongodb.ts` - Database connection handler
+- `lib/auth.ts` - JWT and password utilities
+- `lib/models.ts` - TypeScript interfaces
+- `app/api/auth/*` - Authentication endpoints
+
+## 📚 Documentation
+
+- [SETUP.md](./SETUP.md) - Detailed setup instructions
+- [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md) - Technical implementation details
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Original system architecture
+
+## 🚧 Development Status
+
+### ✅ Completed (Phase 1)
+- MongoDB integration
+- Authentication system
+- Hospital management portal
+- Route restructuring
+- UI/UX improvements
+- Security implementation
+
+### 🔄 In Progress (Phase 2)
+- Doctor portal features
+- Patient portal features
+- AI integrations
+- Real-time notifications
+
+### 📋 Planned (Future Phases)
+- Multi-hospital network
+- City-wide health coordination
+- Advanced analytics
+- Gamification
+- Mobile apps
+
+## 🐛 Troubleshooting
+
+### MongoDB Connection Error
+- Verify `MONGODB_URI` in `.env.local`
+- Check MongoDB Atlas IP whitelist
+- Ensure network connectivity
+
+### Authentication Issues
+- Clear browser cookies
+- Verify `JWT_SECRET` is set
+- Check console for errors
+
+### Build Errors
+```bash
+rm -rf .next
+npm install
+npm run build
+```
+
+## 🤝 Contributing
+
+This project follows a config-based architecture. When contributing:
+- Use TypeScript for type safety
+- Follow the existing code structure
+- Write clean, readable code
+- Test authentication flows
+- Update documentation
+
+## 📄 License
+
+[Add your license here]
+
+## 👥 Team
+
+TSM Entity Development Team
+
+## 🔗 Links
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+---
+
+**Current Version**: 1.0.0 (Phase 1 Complete)
+**Last Updated**: January 2026

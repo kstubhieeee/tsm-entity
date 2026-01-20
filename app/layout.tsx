@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Poppins } from "next/font/google";
 import "./globals.css";
-import { LayoutClient } from "@/components/layout/layout-client";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -16,8 +15,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Hospital Operations Platform",
-  description: "Intelligent hospital operations platform for optimizing patient flow and resource utilization.",
+  title: "TSM Entity - Healthcare Management Platform",
+  description: "Intelligent healthcare platform for hospitals, doctors, and patients.",
 };
 
 export default function RootLayout({
@@ -30,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${instrumentSerif.variable} ${poppins.variable} antialiased`}
       >
-        <LayoutClient>{children}</LayoutClient>
+        {children}
       </body>
     </html>
   );
