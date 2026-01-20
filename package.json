@@ -35,12 +35,14 @@
     "mongodb": "^6.21.0",
     "mongoose": "^8.21.0",
     "next": "16.1.3",
+    "phosphor-react": "^1.4.1",
     "razorpay": "^2.9.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "recharts": "^3.6.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
+    "tw-animate-css": "^1.3.3",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
