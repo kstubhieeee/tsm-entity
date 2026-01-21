@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "@/lib/auth-helpers";
 import Patient from "@/lib/models/Patient";
 import { connectToDatabase } from "@/lib/mongodb-mongoose";
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession();
     await connectToDatabase();
 
     // Get top 10 patients sorted by total coins (only patients, not clinicians)
@@ -21,18 +23,32 @@ export async function GET(request: NextRequest) {
 
     // For now, we'll use a simple ranking based on current coins
     // In a more complex system, you could track weekly coin earnings
-    const leaderboard = topPatients.map((patient, index) => ({
-      id: patient._id.toString(),
-      name: patient.personalInfo?.name || "Anonymous Patient",
-      coins: patient.coins || 0,
-      level: patient.level || 1,
-      streak: patient.streak || 0,
-      completedTasks: patient.completedTasks || 0,
-      avatar: patient.avatar || "Users",
-      totalEarned: patient.totalEarned || 0,
-      bestStreak: patient.bestStreak || 0,
-      rankThisWeek: index + 1,
-    }));
+    const leaderboard = topPatients.map((patient, index) => {
+      const isCurrentUser = session?.user?.email === patient.userId;
+      let displayName = patient.personalInfo?.name;
+      
+      // If no name, extract from email
+      if (!displayName && patient.userId) {
+        const emailName = patient.userId.split('@')[0];
+        displayName = emailName
+          .split(/[._-]/)
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+      }
+      
+      return {
+        id: patient._id.toString(),
+        name: isCurrentUser ? "You" : (displayName || "Anonymous Patient"),
+        coins: patient.coins || 0,
+        level: patient.level || 1,
+        streak: patient.streak || 0,
+        completedTasks: patient.completedTasks || 0,
+        avatar: patient.avatar || "Users",
+        totalEarned: patient.totalEarned || 0,
+        bestStreak: patient.bestStreak || 0,
+        rankThisWeek: index + 1,
+      };
+    });
 
     return NextResponse.json({
       success: true,

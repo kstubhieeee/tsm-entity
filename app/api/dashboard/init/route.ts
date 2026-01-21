@@ -23,12 +23,20 @@ export async function POST(request: NextRequest) {
     });
 
     if (!currentPatient) {
+      // Extract name from email (before @)
+      const emailName = session.user.email.split('@')[0];
+      const displayName = emailName
+        .split(/[._-]/)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
       currentPatient = await Patient.create({
         userId: session.user.email,
         role: "patient",
         hasCompletedInfo: false,
         personalInfo: {
           email: session.user.email,
+          name: displayName,
         },
         medicalHistory: {
           conditions: [],
