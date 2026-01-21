@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "@/lib/auth-helpers";
 import Patient from "@/lib/models/Patient";
 import { Task } from "@/lib/models/Task";
+import Doctor from "@/lib/models/Doctor";
 import { connectToDatabase } from "@/lib/mongodb-mongoose";
 
 export async function POST(request: NextRequest) {
@@ -552,6 +553,107 @@ export async function POST(request: NextRequest) {
     const finalTaskCount = await Task.countDocuments();
     console.log(`Total tasks in database after init: ${finalTaskCount}`);
 
+    // Initialize sample doctors if none exist
+    const existingDoctors = await Doctor.countDocuments();
+    let createdDoctorsCount = 0;
+
+    if (existingDoctors === 0) {
+      console.log('Creating sample doctors...');
+      const sampleDoctors = [
+        {
+          userId: "dr.sarah.johnson@medira.com",
+          name: "Dr. Sarah Johnson",
+          email: "dr.sarah.johnson@medira.com",
+          specialization: "Cardiologist",
+          yearsOfExperience: 15,
+          consultationFee: 1500,
+          description: "Expert in heart diseases and cardiovascular conditions with over 15 years of experience.",
+          availability: [
+            { day: "Monday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"] },
+            { day: "Tuesday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"] },
+            { day: "Wednesday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"] },
+            { day: "Thursday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"] },
+            { day: "Friday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"] },
+          ],
+          bookedSlots: [],
+          rating: 4.8,
+          totalConsultations: 2500,
+          isActive: true,
+        },
+        {
+          userId: "dr.michael.chen@medira.com",
+          name: "Dr. Michael Chen",
+          email: "dr.michael.chen@medira.com",
+          specialization: "Orthopedist",
+          yearsOfExperience: 12,
+          consultationFee: 1200,
+          description: "Specialist in bone, joint, and muscle disorders with expertise in sports injuries.",
+          availability: [
+            { day: "Monday", slots: ["10:00 AM", "11:00 AM", "12:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"] },
+            { day: "Tuesday", slots: ["10:00 AM", "11:00 AM", "12:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"] },
+            { day: "Wednesday", slots: ["10:00 AM", "11:00 AM", "12:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"] },
+            { day: "Thursday", slots: ["10:00 AM", "11:00 AM", "12:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"] },
+            { day: "Saturday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM"] },
+          ],
+          bookedSlots: [],
+          rating: 4.6,
+          totalConsultations: 1800,
+          isActive: true,
+        },
+        {
+          userId: "dr.priya.sharma@medira.com",
+          name: "Dr. Priya Sharma",
+          email: "dr.priya.sharma@medira.com",
+          specialization: "Dermatologist",
+          yearsOfExperience: 10,
+          consultationFee: 1000,
+          description: "Experienced dermatologist specializing in skin, hair, and cosmetic treatments.",
+          availability: [
+            { day: "Monday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM"] },
+            { day: "Wednesday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM"] },
+            { day: "Thursday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM"] },
+            { day: "Friday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "01:00 PM", "02:00 PM", "03:00 PM"] },
+            { day: "Saturday", slots: ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM"] },
+          ],
+          bookedSlots: [],
+          rating: 4.7,
+          totalConsultations: 1500,
+          isActive: true,
+        },
+        {
+          userId: "dr.james.wilson@medira.com",
+          name: "Dr. James Wilson",
+          email: "dr.james.wilson@medira.com",
+          specialization: "General Physician",
+          yearsOfExperience: 20,
+          consultationFee: 800,
+          description: "General physician with extensive experience in treating common illnesses and preventive care.",
+          availability: [
+            { day: "Monday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "04:00 PM", "05:00 PM"] },
+            { day: "Tuesday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "04:00 PM", "05:00 PM"] },
+            { day: "Wednesday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "04:00 PM", "05:00 PM"] },
+            { day: "Thursday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "04:00 PM", "05:00 PM"] },
+            { day: "Friday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "04:00 PM", "05:00 PM"] },
+            { day: "Saturday", slots: ["08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM"] },
+          ],
+          bookedSlots: [],
+          rating: 4.9,
+          totalConsultations: 3200,
+          isActive: true,
+        },
+      ];
+
+      try {
+        const result = await Doctor.insertMany(sampleDoctors);
+        createdDoctorsCount = result.length;
+        console.log(`Successfully created ${createdDoctorsCount} sample doctors`);
+      } catch (error) {
+        console.error('Error creating sample doctors:', error);
+      }
+    } else {
+      console.log(`${existingDoctors} doctors already exist`);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Database initialized successfully",
@@ -561,6 +663,8 @@ export async function POST(request: NextRequest) {
       tasksCreated: createdTasksCount,
       existingTasks: finalTaskCount,
       totalTasks: finalTaskCount,
+      doctorsCreated: createdDoctorsCount,
+      existingDoctors: existingDoctors + createdDoctorsCount,
     });
   } catch (error) {
     console.error("Error initializing database:", error);

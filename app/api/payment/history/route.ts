@@ -34,12 +34,19 @@ export async function GET() {
 
     // Get appointment details to include doctor names
     const appointmentIds = payments.map(p => p.appointmentId)
+    
+    // Try to find appointments by both _id (MongoDB ID) and appointmentId (custom ID)
     const appointments = await Appointment.find({
-      appointmentId: { $in: appointmentIds }
+      $or: [
+        { _id: { $in: appointmentIds.filter(id => id.match(/^[0-9a-fA-F]{24}$/)) } }, // MongoDB ObjectIds
+        { appointmentId: { $in: appointmentIds } } // Custom appointment IDs
+      ]
     })
 
     const appointmentMap = new Map()
     appointments.forEach(apt => {
+      // Map by both _id and appointmentId
+      appointmentMap.set(apt._id.toString(), apt)
       appointmentMap.set(apt.appointmentId, apt)
     })
 

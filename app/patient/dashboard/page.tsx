@@ -180,7 +180,8 @@ export default function PatientDashboard() {
             case 'Heart': return Heart;
             case 'Star': return Star;
             case 'Plus': return Plus;
-            case 'TrendingUp': return TrendingUp;
+            case 'TrendingUp': return TrendUp;
+            case 'TrendUp': return TrendUp;
             default: return Activity;
         }
     };
