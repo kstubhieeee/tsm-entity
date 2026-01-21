@@ -60,13 +60,23 @@ export default function Dashboard() {
     const last7Days = Array.from({ length: 7 }, (_, i) => {
       const date = new Date()
       date.setDate(date.getDate() - (6 - i))
+      date.setHours(0, 0, 0, 0)
+      const nextDate = new Date(date)
+      nextDate.setDate(nextDate.getDate() + 1)
+      
+      const dayAdmissions = admissions.filter(a => {
+        const admissionDate = new Date(a.admissionDate)
+        admissionDate.setHours(0, 0, 0, 0)
+        return admissionDate.getTime() >= date.getTime() && admissionDate.getTime() < nextDate.getTime()
+      }).length
+      
       return {
         date: date.toLocaleDateString('en-US', { weekday: 'short' }),
-        admissions: Math.floor(Math.random() * 15) + 5
+        admissions: dayAdmissions
       }
     })
     return last7Days
-  }, [])
+  }, [admissions])
 
   return (
     <div className="space-y-6">

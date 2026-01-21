@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Clock, UserPlus, CheckCircle, Spinner } from 'phosphor-react'
 import { formatDistanceToNow } from 'date-fns'
 
-const departments = ['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'General Medicine', 'Emergency']
+const defaultDepartments = ['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'General Medicine', 'Emergency']
 
 interface Patient {
   _id: string
@@ -25,8 +25,10 @@ interface Patient {
 export default function OPDPage() {
   const [opdQueue, setOpdQueue] = useState<Patient[]>([])
   const [loading, setLoading] = useState(true)
+  const [updatingId, setUpdatingId] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [selectedDept, setSelectedDept] = useState<string>('')
+  const [departments, setDepartments] = useState<string[]>(defaultDepartments)
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -39,7 +41,13 @@ export default function OPDPage() {
     try {
       const response = await fetch('/api/manage/opd')
       const data = await response.json()
-      setOpdQueue(data.patients || [])
+      const patients = data.patients || []
+      setOpdQueue(patients)
+      
+      const uniqueDepartments = Array.from(new Set(patients.map((p: Patient) => p.department)))
+      if (uniqueDepartments.length > 0) {
+        setDepartments([...uniqueDepartments, ...defaultDepartments.filter(d => !uniqueDepartments.includes(d))])
+      }
     } catch (error) {
       console.error('Failed to fetch patients:', error)
     } finally {
@@ -83,15 +91,31 @@ export default function OPDPage() {
   }
 
   const updateStatus = async (patientId: string, status: Patient['status']) => {
+    setUpdatingId(patientId)
     try {
-      await fetch('/api/manage/opd', {
+      setOpdQueue(prev => prev.map(p => 
+        p._id === patientId ? { ...p, status } : p
+      ))
+      
+      const response = await fetch('/api/manage/opd', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ patientId, status })
       })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to update status')
+      }
+      
       await fetchPatients()
     } catch (error) {
       console.error('Failed to update status:', error)
+      await fetchPatients()
+      alert(error instanceof Error ? error.message : 'Failed to update patient status')
+    } finally {
+      setUpdatingId(null)
     }
   }
 
@@ -273,21 +297,39 @@ export default function OPDPage() {
                       <Button
                         size="sm"
                         onClick={() => updateStatus(patient._id, 'in-consultation')}
-                        className="bg-blue-500 hover:bg-blue-600 text-white"
+                        disabled={updatingId === patient._id}
+                        className="bg-blue-500 hover:bg-blue-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                         type="button"
                       >
-                        Start Consultation
+                        {updatingId === patient._id ? (
+                          <>
+                            <Spinner size={14} weight="bold" className="animate-spin mr-1" />
+                            Starting...
+                          </>
+                        ) : (
+                          'Start Consultation'
+                        )}
                       </Button>
                     )}
                     {patient.status === 'in-consultation' && (
                       <Button
                         size="sm"
                         onClick={() => updateStatus(patient._id, 'completed')}
-                        className="bg-green-500 hover:bg-green-600 text-white"
+                        disabled={updatingId === patient._id}
+                        className="bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                         type="button"
                       >
-                        <CheckCircle size={16} weight="bold" className="mr-1" />
-                        Complete
+                        {updatingId === patient._id ? (
+                          <>
+                            <Spinner size={14} weight="bold" className="animate-spin mr-1" />
+                            Completing...
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle size={16} weight="bold" className="mr-1" />
+                            Complete
+                          </>
+                        )}
                       </Button>
                     )}
                   </div>

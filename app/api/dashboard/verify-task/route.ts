@@ -308,12 +308,72 @@ For Squats specifically:
 - Ensure proper form (knees tracking over toes, back straight)
 - Required count: ${extractNumber(task.title)} squats
 `;
-      } else if (task.title.toLowerCase().includes("walk")) {
+      } else if (task.title.toLowerCase().includes("walk") || task.title.toLowerCase().includes("running") || task.title.toLowerCase().includes("run")) {
         specificInstructions = `
-For Walking/Cardio tasks:
+For Walking/Running/Cardio tasks:
 - Estimate the duration of continuous movement
 - Check if the person maintained a good pace
 - Verify they stayed active for the required time
+- Required duration: ${extractDuration(task.title)} minutes
+`;
+      } else if (task.title.toLowerCase().includes("jumping jack")) {
+        specificInstructions = `
+For Jumping Jacks:
+- Count the number of jumping jacks performed
+- Check if arms went overhead and legs spread apart
+- Verify they returned to starting position each time
+- Ensure proper form (arms fully extended overhead, legs spread wide)
+- Required count: ${extractNumber(task.title)} jumping jacks
+`;
+      } else if (task.title.toLowerCase().includes("plank")) {
+        specificInstructions = `
+For Plank Hold:
+- Verify the person held proper plank position
+- Check if body formed a straight line (no sagging hips or raised butt)
+- Ensure they maintained the position for the required duration
+- Required duration: ${extractDuration(task.title)} seconds
+`;
+      } else if (task.title.toLowerCase().includes("lunge")) {
+        specificInstructions = `
+For Lunges:
+- Count the number of lunges performed (count each leg)
+- Check if front knee stayed over ankle, back knee nearly touched ground
+- Verify they returned to standing position each time
+- Ensure proper form (upright torso, balanced movement)
+- Required count: ${extractNumber(task.title)} lunges
+`;
+      } else if (task.title.toLowerCase().includes("sit-up")) {
+        specificInstructions = `
+For Sit-ups:
+- Count the number of sit-ups performed
+- Check if they went from lying to sitting position
+- Verify they returned to lying position each time
+- Ensure proper form (hands behind head, full range of motion)
+- Required count: ${extractNumber(task.title)} sit-ups
+`;
+      } else if (task.title.toLowerCase().includes("burpee")) {
+        specificInstructions = `
+For Burpees:
+- Count the number of burpees performed
+- Verify complete movement: squat down, jump back to plank, push-up, jump forward, jump up
+- Check if they completed all phases of the movement
+- Ensure proper form throughout the sequence
+- Required count: ${extractNumber(task.title)} burpees
+`;
+      } else if (task.title.toLowerCase().includes("yoga") || task.title.toLowerCase().includes("stretch")) {
+        specificInstructions = `
+For Yoga/Stretching tasks:
+- Verify the person performed yoga poses or stretching movements
+- Check if they maintained poses for appropriate duration
+- Ensure proper form and alignment
+- Verify they completed the full duration: ${extractDuration(task.title)} minutes
+`;
+      } else if (task.title.toLowerCase().includes("workout") || task.title.toLowerCase().includes("training")) {
+        specificInstructions = `
+For Workout/Training sessions:
+- Verify the person performed various exercises throughout the session
+- Check if they maintained activity for the required duration
+- Ensure they performed multiple exercises or movements
 - Required duration: ${extractDuration(task.title)} minutes
 `;
       } else {
@@ -337,6 +397,30 @@ For Meditation/Breathing tasks:
 - Verify the person was seated or lying in a calm position
 - Check if they maintained stillness for the required duration
 - Look for signs of focused breathing or meditation posture
+- Required duration: ${extractDuration(task.title)} minutes
+`;
+      } else if (task.title.toLowerCase().includes("yoga") || task.title.toLowerCase().includes("salutation")) {
+        specificInstructions = `
+For Yoga tasks:
+- Verify the person performed yoga poses or sequences
+- Check if they completed the required rounds or duration
+- Ensure proper form and flow of movements
+- Required duration: ${extractDuration(task.title)} minutes or rounds: ${extractNumber(task.title)}
+`;
+      } else if (task.title.toLowerCase().includes("tai chi") || task.title.toLowerCase().includes("relaxation")) {
+        specificInstructions = `
+For Tai Chi/Relaxation tasks:
+- Verify the person performed slow, flowing movements or was in a relaxed state
+- Check if they maintained the activity for the required duration
+- Ensure calm, controlled movements or stillness
+- Required duration: ${extractDuration(task.title)} minutes
+`;
+      } else if (task.title.toLowerCase().includes("stretch")) {
+        specificInstructions = `
+For Stretching tasks:
+- Verify the person performed stretching movements
+- Check if they held stretches appropriately
+- Ensure they completed the full duration
 - Required duration: ${extractDuration(task.title)} minutes
 `;
       } else {

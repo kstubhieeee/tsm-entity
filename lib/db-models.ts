@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb'
 export interface DBPatient {
   _id?: ObjectId
   userId?: ObjectId
+  hospitalId?: ObjectId
   name: string
   age: number
   gender: 'male' | 'female' | 'other'

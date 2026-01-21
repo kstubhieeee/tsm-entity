@@ -143,7 +143,7 @@ export default function InventoryPage() {
             <TrendDown size={20} weight="bold" className="text-[oklch(0.6_0.2_45)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-[#37322F]">3</div>
+            <div className="text-3xl font-bold text-[#37322F]">{categoryData.filter(c => c.value > 0).length}</div>
             <p className="text-xs text-[rgba(55,50,47,0.80)] mt-1">item categories</p>
           </CardContent>
         </Card>

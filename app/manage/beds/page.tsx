@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Bed, Spinner } from 'phosphor-react'
+import { Bed, Spinner, ArrowClockwise } from 'phosphor-react'
 
 interface Bed {
   _id: string
@@ -17,9 +17,14 @@ interface Bed {
 export default function BedsPage() {
   const [beds, setBeds] = useState<Bed[]>([])
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const fetchBeds = async () => {
+  const fetchBeds = async (showRefreshing = false) => {
     try {
+      if (showRefreshing) {
+        setRefreshing(true)
+      }
       const response = await fetch('/api/manage/beds')
       const data = await response.json()
       setBeds(data.beds || [])
@@ -27,6 +32,9 @@ export default function BedsPage() {
       console.error('Failed to fetch beds:', error)
     } finally {
       setLoading(false)
+      if (showRefreshing) {
+        setRefreshing(false)
+      }
     }
   }
 
@@ -43,6 +51,16 @@ export default function BedsPage() {
 
   useEffect(() => {
     fetchBeds()
+
+    intervalRef.current = setInterval(() => {
+      fetchBeds(true)
+    }, 5000)
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [])
 
   const departments = Array.from(new Set(beds.map(b => b.department)))
@@ -78,9 +96,20 @@ export default function BedsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-instrument-serif text-[#37322F]">Bed Management</h1>
-        <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time bed availability tracking</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-instrument-serif text-[#37322F]">Bed Management</h1>
+          <p className="text-[rgba(55,50,47,0.80)] mt-1">Real-time bed availability tracking</p>
+        </div>
+        <Button
+          onClick={() => fetchBeds(true)}
+          disabled={refreshing}
+          className="bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white disabled:opacity-50"
+          type="button"
+        >
+          <ArrowClockwise size={16} weight="bold" className={`mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+          {refreshing ? 'Refreshing...' : 'Refresh'}
+        </Button>
       </div>
 
       <div className="space-y-6">

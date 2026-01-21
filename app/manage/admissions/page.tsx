@@ -15,6 +15,15 @@ interface Bed {
   status: 'available' | 'occupied'
 }
 
+interface Patient {
+  _id: string
+  name: string
+  age: number
+  gender: string
+  department: string
+  status: string
+}
+
 interface Admission {
   _id: string
   patientName: string
@@ -24,14 +33,18 @@ interface Admission {
   diagnosis?: string
   assignedDoctor?: string
   status: 'active' | 'discharged'
+  dischargeDate?: string
 }
 
 export default function AdmissionsPage() {
   const [admissions, setAdmissions] = useState<Admission[]>([])
   const [beds, setBeds] = useState<Bed[]>([])
+  const [opdPatients, setOpdPatients] = useState<Patient[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [patientSelectionMode, setPatientSelectionMode] = useState<'select' | 'manual'>('select')
   const [formData, setFormData] = useState({
+    patientId: '',
     patientName: '',
     department: '',
     bedId: '',
@@ -41,16 +54,28 @@ export default function AdmissionsPage() {
 
   const fetchData = async () => {
     try {
-      const [admissionsRes, bedsRes] = await Promise.all([
+      console.log('🔄 Fetching admissions, beds, and OPD data...')
+      const [admissionsRes, bedsRes, opdRes] = await Promise.all([
         fetch('/api/manage/admissions'),
-        fetch('/api/manage/beds')
+        fetch('/api/manage/beds'),
+        fetch('/api/manage/opd')
       ])
       const admissionsData = await admissionsRes.json()
       const bedsData = await bedsRes.json()
+      const opdData = await opdRes.json()
+      
+      console.log('📊 Fetched data:', {
+        admissions: admissionsData.admissions?.length || 0,
+        beds: bedsData.beds?.length || 0,
+        occupiedBeds: bedsData.beds?.filter((b: Bed) => b.status === 'occupied').length || 0,
+        opdPatients: (opdData.patients || []).filter((p: Patient) => p.status === 'waiting' || p.status === 'in-consultation').length
+      })
+      
       setAdmissions(admissionsData.admissions || [])
       setBeds(bedsData.beds || [])
+      setOpdPatients((opdData.patients || []).filter((p: Patient) => p.status === 'waiting' || p.status === 'in-consultation'))
     } catch (error) {
-      console.error('Failed to fetch data:', error)
+      console.error('❌ Failed to fetch data:', error)
     } finally {
       setLoading(false)
     }
@@ -63,18 +88,31 @@ export default function AdmissionsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
+      const selectedBed = beds.find(b => b._id === formData.bedId)
+      const bedNumber = selectedBed?.bedNumber || 'Unknown'
+      
       const response = await fetch('/api/manage/admissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          patientId: 'temp-' + Date.now()
+          patientId: formData.patientId || undefined,
+          patientName: formData.patientName,
+          department: formData.department,
+          bedId: formData.bedId,
+          diagnosis: formData.diagnosis,
+          assignedDoctor: formData.assignedDoctor
         })
       })
       
       if (response.ok) {
+        const data = await response.json()
+        console.log('✅ Admission created successfully! Response:', data)
+        console.log('🔄 Refetching data to update beds...')
         await fetchData()
+        console.log('✅ Data refetched after admission creation')
+        
         setFormData({
+          patientId: '',
           patientName: '',
           department: '',
           bedId: '',
@@ -82,12 +120,29 @@ export default function AdmissionsPage() {
           assignedDoctor: ''
         })
         setShowForm(false)
+        setPatientSelectionMode('select')
+        
+        alert(`Admission successful! ${formData.patientName} has been allotted Bed ${bedNumber}`)
       } else {
         const error = await response.json()
+        console.error('❌ Admission creation failed:', error)
         alert(error.error || 'Failed to create admission')
       }
     } catch (error) {
       console.error('Failed to create admission:', error)
+      alert('Failed to create admission. Please try again.')
+    }
+  }
+
+  const handlePatientSelect = (patientId: string) => {
+    const patient = opdPatients.find(p => p._id === patientId)
+    if (patient) {
+      setFormData({
+        ...formData,
+        patientId: patient._id,
+        patientName: patient.name,
+        department: patient.department
+      })
     }
   }
 
@@ -141,20 +196,67 @@ export default function AdmissionsPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex gap-2 mb-4">
+                <Button
+                  type="button"
+                  variant={patientSelectionMode === 'select' ? 'default' : 'outline'}
+                  onClick={() => setPatientSelectionMode('select')}
+                  className={patientSelectionMode === 'select' ? 'bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white' : 'border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]'}
+                >
+                  Select from OPD
+                </Button>
+                <Button
+                  type="button"
+                  variant={patientSelectionMode === 'manual' ? 'default' : 'outline'}
+                  onClick={() => setPatientSelectionMode('manual')}
+                  className={patientSelectionMode === 'manual' ? 'bg-[oklch(0.6_0.2_45)] hover:opacity-90 text-white' : 'border-[rgba(55,50,47,0.12)] text-[rgba(55,50,47,0.80)] hover:bg-[rgba(55,50,47,0.05)]'}
+                >
+                  Manual Entry
+                </Button>
+              </div>
+
+              {patientSelectionMode === 'select' ? (
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-[#37322F] mb-2 block">Select Patient</label>
+                    <select
+                      value={formData.patientId}
+                      onChange={(e) => handlePatientSelect(e.target.value)}
+                      className="w-full px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F]"
+                      required
+                    >
+                      <option value="">Select a patient from OPD queue</option>
+                      {opdPatients.map(patient => (
+                        <option key={patient._id} value={patient._id}>
+                          {patient.name} ({patient.age}y, {patient.gender}) - {patient.department}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData.patientName && (
+                    <div className="p-3 bg-[rgba(55,50,47,0.05)] rounded-lg">
+                      <p className="text-sm text-[rgba(55,50,47,0.80)]">Selected: <span className="font-medium text-[#37322F]">{formData.patientName}</span></p>
+                      <p className="text-sm text-[rgba(55,50,47,0.80)]">Department: <span className="font-medium text-[#37322F]">{formData.department}</span></p>
+                    </div>
+                  )}
+                </div>
+              ) : (
                 <Input
                   placeholder="Patient Name"
                   value={formData.patientName}
-                  onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, patientName: e.target.value, patientId: '' })}
                   className="bg-white border-[rgba(55,50,47,0.12)] text-[#37322F]"
                   required
                 />
-                
+              )}
+
+              <div className="grid md:grid-cols-2 gap-4">
                 <select
                   value={formData.department}
                   onChange={(e) => setFormData({ ...formData, department: e.target.value, bedId: '' })}
                   className="px-3 py-2 bg-white border border-[rgba(55,50,47,0.12)] rounded-lg text-[#37322F]"
                   required
+                  disabled={patientSelectionMode === 'select' && formData.patientId !== ''}
                 >
                   <option value="">Select Department</option>
                   {departments.map(dept => (
@@ -227,7 +329,8 @@ export default function AdmissionsPage() {
                 <p className="text-[rgba(55,50,47,0.80)] text-center py-8">No active admissions</p>
               ) : (
                 admissions.filter(a => a.status === 'active').map((admission) => {
-                  const bed = beds.find(b => b._id === admission.bedId)
+                  const bedIdStr = typeof admission.bedId === 'string' ? admission.bedId : admission.bedId.toString()
+                  const bed = beds.find(b => b._id === bedIdStr || b._id.toString() === bedIdStr)
                   return (
                     <div
                       key={admission._id}
@@ -239,13 +342,18 @@ export default function AdmissionsPage() {
                           <Badge className="bg-green-500/10 text-green-600 border-green-500/20">
                             Active
                           </Badge>
+                          {bed && (
+                            <Badge className="bg-[oklch(0.6_0.2_45)]/10 text-[oklch(0.6_0.2_45)] border-[oklch(0.6_0.2_45)]/20 font-semibold">
+                              Bed {bed.bedNumber}
+                            </Badge>
+                          )}
                         </div>
                         <div className="grid grid-cols-2 gap-4 mt-2 text-sm text-[rgba(55,50,47,0.80)]">
                           <div>
                             <span className="text-[rgba(55,50,47,0.80)]">Department:</span> {admission.department}
                           </div>
-                          <div>
-                            <span className="text-[rgba(55,50,47,0.80)]">Bed:</span> {bed?.bedNumber || 'N/A'}
+                          <div className="font-semibold text-[#37322F]">
+                            <span className="text-[rgba(55,50,47,0.80)]">Bed:</span> <span className="text-[oklch(0.6_0.2_45)]">{bed?.bedNumber || 'N/A'}</span>
                           </div>
                           {admission.assignedDoctor && (
                             <div>

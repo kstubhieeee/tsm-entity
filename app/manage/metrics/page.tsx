@@ -20,9 +20,16 @@ export default function MetricsPage() {
     const occupancyRate = Math.round((occupiedBeds / totalBeds) * 100)
     
     const activeAdmissions = admissions.filter(a => a.status === 'active').length
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    
     const todayDischarges = admissions.filter(a => {
-      const today = new Date().toDateString()
-      return a.status === 'discharged'
+      if (a.status !== 'discharged' || !a.dischargeDate) return false
+      const dischargeDate = new Date(a.dischargeDate)
+      dischargeDate.setHours(0, 0, 0, 0)
+      return dischargeDate.getTime() >= today.getTime() && dischargeDate.getTime() < tomorrow.getTime()
     }).length
     
     const lowStockCount = inventory.filter(i => i.currentStock <= i.minThreshold).length
@@ -31,7 +38,8 @@ export default function MetricsPage() {
     const avgWaitTimes = opdQueue
       .filter(p => p.status === 'waiting')
       .reduce((acc, p) => {
-        const waitTime = Math.round((new Date().getTime() - p.checkInTime.getTime()) / 60000)
+        const checkInTime = p.checkInTime instanceof Date ? p.checkInTime : new Date(p.checkInTime)
+        const waitTime = Math.round((new Date().getTime() - checkInTime.getTime()) / 60000)
         const dept = p.department
         if (!acc[dept]) acc[dept] = { total: 0, count: 0 }
         acc[dept].total += waitTime
@@ -215,21 +223,53 @@ export default function MetricsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
+              <div className={`flex items-center justify-between p-3 rounded-lg border ${
+                opdQueue.length >= 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+              }`}>
                 <span className="font-medium text-[#37322F]">OPD System</span>
-                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
+                <Badge className={
+                  opdQueue.length >= 0 
+                    ? 'bg-green-500/10 text-green-600 border-green-500/20' 
+                    : 'bg-red-500/10 text-red-600 border-red-500/20'
+                }>
+                  {opdQueue.length >= 0 ? 'Operational' : 'Error'}
+                </Badge>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
+              <div className={`flex items-center justify-between p-3 rounded-lg border ${
+                beds.length > 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+              }`}>
                 <span className="font-medium text-[#37322F]">Bed Management</span>
-                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
+                <Badge className={
+                  beds.length > 0 
+                    ? 'bg-green-500/10 text-green-600 border-green-500/20' 
+                    : 'bg-red-500/10 text-red-600 border-red-500/20'
+                }>
+                  {beds.length > 0 ? 'Operational' : 'No Beds'}
+                </Badge>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
+              <div className={`flex items-center justify-between p-3 rounded-lg border ${
+                admissions.length >= 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+              }`}>
                 <span className="font-medium text-[#37322F]">Admission System</span>
-                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
+                <Badge className={
+                  admissions.length >= 0 
+                    ? 'bg-green-500/10 text-green-600 border-green-500/20' 
+                    : 'bg-red-500/10 text-red-600 border-red-500/20'
+                }>
+                  {admissions.length >= 0 ? 'Operational' : 'Error'}
+                </Badge>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
+              <div className={`flex items-center justify-between p-3 rounded-lg border ${
+                inventory.length > 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+              }`}>
                 <span className="font-medium text-[#37322F]">Inventory Tracking</span>
-                <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Operational</Badge>
+                <Badge className={
+                  inventory.length > 0 
+                    ? 'bg-green-500/10 text-green-600 border-green-500/20' 
+                    : 'bg-red-500/10 text-red-600 border-red-500/20'
+                }>
+                  {inventory.length > 0 ? 'Operational' : 'No Items'}
+                </Badge>
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 border border-green-200">
                 <span className="font-medium text-[#37322F]">City Health API</span>
