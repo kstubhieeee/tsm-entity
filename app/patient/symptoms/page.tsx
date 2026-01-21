@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Activity, MagnifyingGlass, AlertCircle, CheckCircle, Clock, Heartbeat } from "phosphor-react"
+import { Activity, MagnifyingGlass, Warning, CheckCircle, Clock, Heartbeat } from "phosphor-react"
 
 export default function SymptomCheckerPage() {
   const [symptoms, setSymptoms] = useState("")
@@ -166,7 +166,7 @@ export default function SymptomCheckerPage() {
                 <div className="space-y-3">
                   {analysisResults.nextSteps.map((step, index) => (
                     <div key={index} className="flex items-start gap-3 p-3 border border-[rgba(55,50,47,0.12)] rounded-lg">
-                      <AlertCircle size={20} weight="regular" className="text-blue-600 mt-0.5" />
+                      <Warning size={20} weight="regular" className="text-blue-600 mt-0.5" />
                       <span className="font-sans text-[#37322F]">{step}</span>
                     </div>
                   ))}
