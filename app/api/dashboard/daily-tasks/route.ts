@@ -24,14 +24,18 @@ export async function GET(request: NextRequest) {
     }).select("_id");
 
     if (!patient) {
+      console.log(`Patient not found for user: ${session.user.email}`);
       return NextResponse.json(
         { success: false, error: "Patient not found" },
         { status: 404 }
       );
     }
 
+    console.log(`Patient found: ${patient._id}`);
+
     // Get all available tasks
     const allTasks = await Task.find({ isActive: true }).lean();
+    console.log(`Found ${allTasks.length} active tasks in database`);
 
     // Get today's completed tasks
     const today = new Date();
@@ -53,6 +57,7 @@ export async function GET(request: NextRequest) {
 
     // Select daily tasks (mix of different categories)
     const dailyTasks = selectDailyTasks(allTasks, completedTaskIds);
+    console.log(`Selected ${dailyTasks.length} daily tasks for user`);
 
     return NextResponse.json({
       success: true,

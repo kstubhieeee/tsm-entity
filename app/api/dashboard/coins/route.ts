@@ -22,11 +22,19 @@ export async function GET(request: NextRequest) {
     }).select("coins level streak completedTasks totalEarned bestStreak");
 
     if (!patient) {
+      console.log(`Patient not found for user: ${session.user.email}`);
       return NextResponse.json(
         { success: false, error: "Patient not found" },
         { status: 404 }
       );
     }
+
+    console.log(`Patient coins data:`, {
+      coins: patient.coins,
+      level: patient.level,
+      streak: patient.streak,
+      completedTasks: patient.completedTasks
+    });
 
     return NextResponse.json({
       success: true,

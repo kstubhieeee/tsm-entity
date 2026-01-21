@@ -1,11 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "@/lib/auth-helpers";
 import Patient from "@/lib/models/Patient";
 import { Task } from "@/lib/models/Task";
 import { connectToDatabase } from "@/lib/mongodb-mongoose";
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession();
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { success: false, error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
     await connectToDatabase();
+
+    // Check if current user's patient document exists, if not create it
+    let currentPatient = await Patient.findOne({
+      userId: session.user.email,
+      role: "patient",
+    });
+
+    if (!currentPatient) {
+      currentPatient = await Patient.create({
+        userId: session.user.email,
+        role: "patient",
+        hasCompletedInfo: false,
+        personalInfo: {
+          email: session.user.email,
+        },
+        medicalHistory: {
+          conditions: [],
+          medications: [],
+          allergies: [],
+          surgeries: [],
+          familyHistory: [],
+        },
+        coins: 0,
+        level: 1,
+        streak: 0,
+        completedTasks: 0,
+        avatar: "Users",
+        totalEarned: 0,
+        bestStreak: 0,
+        rankThisWeek: 0,
+      });
+    } else {
+      // Update existing patient to ensure all leaderboard fields exist
+      const updateFields: any = {};
+      if (currentPatient.coins === undefined || currentPatient.coins === null) updateFields.coins = 0;
+      if (currentPatient.level === undefined || currentPatient.level === null) updateFields.level = 1;
+      if (currentPatient.streak === undefined || currentPatient.streak === null) updateFields.streak = 0;
+      if (currentPatient.completedTasks === undefined || currentPatient.completedTasks === null) updateFields.completedTasks = 0;
+      if (currentPatient.totalEarned === undefined || currentPatient.totalEarned === null) updateFields.totalEarned = 0;
+      if (currentPatient.bestStreak === undefined || currentPatient.bestStreak === null) updateFields.bestStreak = 0;
+      if (!currentPatient.avatar) updateFields.avatar = "Users";
+
+      if (Object.keys(updateFields).length > 0) {
+        await Patient.findByIdAndUpdate(currentPatient._id, { $set: updateFields });
+      }
+    }
 
     // Initialize leaderboard data for existing patients
     // First, add some demo patients with leaderboard data
@@ -451,18 +506,53 @@ export async function POST(request: NextRequest) {
     const existingTasks = await Task.countDocuments();
     let createdTasksCount = 0;
 
+    console.log(`Existing tasks in database: ${existingTasks}`);
+    console.log(`Default tasks to create: ${defaultTasks.length}`);
+
     if (existingTasks === 0) {
-      await Task.insertMany(defaultTasks);
-      createdTasksCount = defaultTasks.length;
+      console.log(`Creating ${defaultTasks.length} default tasks...`);
+      try {
+        const result = await Task.insertMany(defaultTasks);
+        createdTasksCount = result.length;
+        console.log(`Successfully created ${createdTasksCount} tasks`);
+      } catch (error) {
+        console.error('Error inserting tasks:', error);
+      }
+    } else if (existingTasks < defaultTasks.length) {
+      // Some tasks are missing, let's add the rest
+      console.log(`Only ${existingTasks} tasks exist, should be ${defaultTasks.length}. Adding missing tasks...`);
+      try {
+        // Get existing task titles to avoid duplicates
+        const existingTaskTitles = await Task.find({}).select('title').lean();
+        const existingTitles = new Set(existingTaskTitles.map(t => t.title));
+        
+        // Filter out tasks that already exist
+        const tasksToAdd = defaultTasks.filter(task => !existingTitles.has(task.title));
+        
+        if (tasksToAdd.length > 0) {
+          const result = await Task.insertMany(tasksToAdd);
+          createdTasksCount = result.length;
+          console.log(`Successfully created ${createdTasksCount} additional tasks`);
+        }
+      } catch (error) {
+        console.error('Error adding missing tasks:', error);
+      }
+    } else {
+      console.log(`Tasks already exist, skipping creation`);
     }
+
+    const finalTaskCount = await Task.countDocuments();
+    console.log(`Total tasks in database after init: ${finalTaskCount}`);
 
     return NextResponse.json({
       success: true,
       message: "Database initialized successfully",
+      currentPatientInitialized: true,
       demoPatientsCreated: createdPatientsCount,
       existingPatientsUpdated: updatedPatientsCount,
       tasksCreated: createdTasksCount,
-      existingTasks: existingTasks > 0 ? existingTasks : createdTasksCount,
+      existingTasks: finalTaskCount,
+      totalTasks: finalTaskCount,
     });
   } catch (error) {
     console.error("Error initializing database:", error);

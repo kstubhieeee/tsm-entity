@@ -91,43 +91,77 @@ export default function PatientDashboard() {
     // Load initial data
     useEffect(() => {
         const loadData = async () => {
-            if (!session?.user?.email) return;
+            if (!session?.user?.email) {
+                setIsLoading(false);
+                return;
+            }
 
             try {
+                // Initialize patient data first (creates patient document if it doesn't exist)
+                const initResponse = await fetch('/api/dashboard/init', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                
+                if (!initResponse.ok) {
+                    console.error('Failed to initialize patient data');
+                }
+
                 // Load user data and coins
                 const userResponse = await fetch('/api/dashboard/coins');
                 if (userResponse.ok) {
                     const userData = await userResponse.json();
+                    console.log('User data response:', userData);
                     if (userData.success) {
-                        setUserCoins(userData.userData.coins);
-                        setUserLevel(userData.userData.level);
-                        setUserStreak(userData.userData.streak);
-                        setUserCompletedTasks(userData.userData.completedTasks);
-                        setUserTotalEarned(userData.userData.totalEarned);
-                        setUserBestStreak(userData.userData.bestStreak);
+                        setUserCoins(userData.userData.coins || 0);
+                        setUserLevel(userData.userData.level || 1);
+                        setUserStreak(userData.userData.streak || 0);
+                        setUserCompletedTasks(userData.userData.completedTasks || 0);
+                        setUserTotalEarned(userData.userData.totalEarned || 0);
+                        setUserBestStreak(userData.userData.bestStreak || 0);
+                    } else {
+                        console.error('Failed to fetch user data:', userData.error);
                     }
+                } else {
+                    console.error('User API response not ok:', await userResponse.text());
                 }
 
                 // Load daily tasks
                 const tasksResponse = await fetch('/api/dashboard/daily-tasks');
                 if (tasksResponse.ok) {
                     const tasksData = await tasksResponse.json();
-                    if (tasksData.success) {
+                    console.log('Tasks data response:', tasksData);
+                    if (tasksData.success && Array.isArray(tasksData.tasks)) {
                         const tasksWithIcons = tasksData.tasks.map((task: any) => ({
                             ...task,
                             icon: getIconComponent(task.icon)
                         }));
                         setDailyTasks(tasksWithIcons);
+                    } else {
+                        console.error('Failed to fetch tasks:', tasksData.error);
+                        setDailyTasks([]);
                     }
+                } else {
+                    console.error('Tasks API response not ok:', await tasksResponse.text());
+                    setDailyTasks([]);
                 }
 
                 // Load leaderboard
                 const leaderboardResponse = await fetch('/api/dashboard/leaderboard');
                 if (leaderboardResponse.ok) {
                     const leaderboardData = await leaderboardResponse.json();
-                    if (leaderboardData.success) {
+                    console.log('Leaderboard data response:', leaderboardData);
+                    if (leaderboardData.success && Array.isArray(leaderboardData.leaderboard)) {
                         setLeaderboard(leaderboardData.leaderboard);
+                    } else {
+                        console.error('Failed to fetch leaderboard:', leaderboardData.error);
+                        setLeaderboard([]);
                     }
+                } else {
+                    console.error('Leaderboard API response not ok:', await leaderboardResponse.text());
+                    setLeaderboard([]);
                 }
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
@@ -261,7 +295,7 @@ export default function PatientDashboard() {
 
     const completedTasksCount = dailyTasks.filter((task) => task.completed).length;
     const totalTasks = dailyTasks.length;
-    const progressPercentage = (completedTasksCount / totalTasks) * 100;
+    const progressPercentage = totalTasks > 0 ? (completedTasksCount / totalTasks) * 100 : 0;
 
     if (isLoading) {
         return (
@@ -406,7 +440,16 @@ export default function PatientDashboard() {
                                     <Progress value={progressPercentage} className="mt-2" />
                                 </CardHeader>
                                 <CardContent className="space-y-4">
-                                    {dailyTasks.map((task, index) => {
+                                    {dailyTasks.length === 0 ? (
+                                        <div className="text-center py-12">
+                                            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                                                <Activity size={32} className="text-gray-400" />
+                                            </div>
+                                            <p className="text-[rgba(55,50,47,0.80)] font-sans mb-2">No tasks available</p>
+                                            <p className="text-sm text-[rgba(55,50,47,0.60)] font-sans">Tasks will be loaded shortly</p>
+                                        </div>
+                                    ) : (
+                                        dailyTasks.map((task, index) => {
                                         const Icon = task.icon;
                                         return (
                                             <motion.div
@@ -474,7 +517,7 @@ export default function PatientDashboard() {
                                                 </div>
                                             </motion.div>
                                         );
-                                    })}
+                                    }))}
                                 </CardContent>
                             </Card>
                         </motion.div>
@@ -495,7 +538,15 @@ export default function PatientDashboard() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="space-y-3">
-                                    {leaderboard.map((user, index) => (
+                                    {leaderboard.length === 0 ? (
+                                        <div className="text-center py-8">
+                                            <div className="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
+                                                <Trophy size={24} className="text-gray-400" />
+                                            </div>
+                                            <p className="text-sm text-[rgba(55,50,47,0.60)] font-sans">No leaderboard data yet</p>
+                                        </div>
+                                    ) : (
+                                        leaderboard.map((user, index) => (
                                         <motion.div
                                             key={user.id}
                                             initial={{ opacity: 0, x: 20 }}
@@ -542,7 +593,7 @@ export default function PatientDashboard() {
                                                 </div>
                                             </div>
                                         </motion.div>
-                                    ))}
+                                    )))}
                                 </CardContent>
                             </Card>
                         </motion.div>
